@@ -1,10 +1,10 @@
 const resumeData = {
-  profilePhoto: "assets/profile-photo.svg",
+  profilePhoto: "assets/profile.jpg",
   siteMeta: {
     ogTitle: "TENG HAN SEN | MBA × ESG × Business Analysis × AI-Assisted Practice",
     ogDescription:
       "A bilingual personal resume website showcasing education, experience, projects, and AI-assisted practical work.",
-    ogImage: "assets/profile-photo.svg",
+    ogImage: "assets/profile.jpg",
     ogUrl: "https://example.github.io/hansencv/"
   },
   resumePdfPath: "",
@@ -233,12 +233,12 @@ const resumeData = {
       },
       outcomes: {
         "zh-Hant": [
-          "前台測試版已上線：https://www.computex.com.my/",
+          "前台測試網址已上線（暫用）：https://www.computex.com.my/",
           "累積 AI 輔助網站建置、Prompt Engineering 與 debug iteration 的實作經驗。",
           "形成從需求理解、原型生成到測試修正的完整實作循環。"
         ],
         en: [
-          "Front-end test site launched: https://www.computex.com.my/",
+          "Front-end test URL launched (temporary): https://www.computex.com.my/",
           "Built practical experience in AI-assisted website development, prompt engineering, and iterative debugging.",
           "Developed an end-to-end workflow from requirement understanding to prototype refinement."
         ]
@@ -265,13 +265,6 @@ const resumeData = {
           "Evaluated the carbon management capabilities of real estate suppliers, including IT services, construction/renovation, and event-related vendors.",
           "Conducted in-depth comparisons of domestic and international frameworks to define Scope 3 boundaries.",
           "Designed incentive mechanisms to improve supplier carbon data provision and enhance carbon accounting accuracy on the corporate side."
-        ]
-      },
-      outcomes: {
-        "zh-Hant": ["獨立完成深度英文文獻回顧與實證報告。", "以投稿國際學術研討會為核心 KPI。"],
-        en: [
-          "Delivered a comprehensive English literature review and empirical report.",
-          "Targeted submission to international academic conferences."
         ]
       },
       plannedKpi: {
@@ -347,7 +340,7 @@ const resumeData = {
   ],
 
   activities: [
-    { "zh-Hant": "慈濟大學國際親善大使", en: "Tzu Chi University International Goodwill Ambassador" },
+    { "zh-Hant": "慈濟大學親善大使", en: "Tzu Chi University Goodwill Ambassador" },
     {
       "zh-Hant": "慈科大兒童劇幕前幕後支援",
       en: "Tzu Chi University of Science and Technology Children's Theater Frontstage/Backstage Support"
@@ -383,7 +376,7 @@ const resumeData = {
   evidence: [
     {
       type: { "zh-Hant": "網站實作", en: "Website Practice" },
-      title: { "zh-Hant": "Computex 公司網站測試版", en: "Computex company website test version" },
+      title: { "zh-Hant": "bakewithmeow 測試版", en: "bakewithmeow test version" },
       link: "https://www.computex.com.my/",
       visible: true
     }
