@@ -333,9 +333,9 @@ const resumeData = {
   ],
 
   certifications: [
+    { "zh-Hant": "ACP InDesign 2020 (2025)", en: "ACP InDesign 2020 (2025)" }
     { "zh-Hant": "TBSA 初級商務企劃能力檢定（2024）", en: "TBSA Basic Business Planning Certification (2024)" },
     { "zh-Hant": "PMA 專案助理證照（2024）", en: "PMA Project Management Assistant Certification (2024)" },
-    { "zh-Hant": "ACP InDesign 2020 (2024)", en: "ACP InDesign 2020 (2024)" }
     { "zh-Hant": "ISO 14064-1（2023）", en: "ISO 14064-1 (2023)" },
   ],
 
