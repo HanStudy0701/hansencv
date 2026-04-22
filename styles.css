@@ -1,3 +1,14 @@
+.data-error-banner {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: 10px 16px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  background: #c62828;
+}
+
 :root {
   --bg: #f5f7fb;
   --surface: #ffffff;
