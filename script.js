@@ -14,11 +14,6 @@
     return localizedValue[state.lang] || localizedValue["zh-Hant"] || "";
   }
 
-  function sourceTag(source) {
-    const label = source === "104" ? t("labels.source104") : t("labels.sourceSupp");
-    return `<span class="chip">${label}</span>`;
-  }
-
   function renderNav() {
     const navList = $("#navList");
     navList.innerHTML = resumeData.navOrder
@@ -56,7 +51,7 @@
           <article class="card">
             <h3>${langText(item.school)}</h3>
             <p class="meta">${t("labels.period")}: ${item.period}</p>
-            ${sourceTag(item.source)}
+            ${item.gpa ? `<p class="meta">${t("labels.gpa")}: ${item.gpa}</p>` : ""}
           </article>`
       )
       .join("");
@@ -72,7 +67,6 @@
             <p><strong>${t("labels.role")}:</strong> ${langText(item.role)}</p>
             <p class="meta"><strong>${t("labels.period")}:</strong> ${item.period}</p>
             <ul>${bullets}</ul>
-            ${sourceTag(item.source)}
           </article>`;
       })
       .join("");
@@ -91,7 +85,6 @@
             <p><strong>Outcomes</strong></p>
             <ul>${project.outcomes[state.lang].map((o) => `<li>${o}</li>`).join("")}</ul>
             <p class="meta">${langText(project.awardsOrFunding)}</p>
-            ${sourceTag(project.source)}
           </article>`
       )
       .join("");
@@ -100,7 +93,7 @@
   function renderAwards() {
     $("#awardList").innerHTML = resumeData.awards
       .map(
-        (award) => `<li><span>${langText(award.title)}</span> <strong>${award.year}</strong> ${sourceTag(award.source)}</li>`
+        (award) => `<li><span>${langText(award.title)}</span><strong class="award-year">${award.year}</strong></li>`
       )
       .join("");
   }
@@ -108,17 +101,27 @@
   function renderSkills() {
     const skillHtml = `
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "語言能力" : "Language Proficiency"}</h3>
-        ${resumeData.skills.languages.map((s) => `<span class="chip">${s}</span>`).join(" ")}
+        <h3>${state.lang === "zh-Hant" ? "語文能力" : "Language Proficiency"}</h3>
+        ${resumeData.skills.languageProficiency
+          .map(
+            (item) => `<p><strong>${langText(item.language)}</strong><br /><span class="meta">${langText(item.levels)}</span></p>`
+          )
+          .join("")}
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "工具能力" : "Tools"}</h3>
-        ${resumeData.skills.tools.map((s) => `<span class="chip">${s}</span>`).join(" ")}
+        <h3>${state.lang === "zh-Hant" ? "專長" : "Specialties"}</h3>
+        ${resumeData.skills.specialties
+          .map(
+            (item) =>
+              `<p><strong>${item.group}</strong><br />${item.hashtags.map((s) => `<span class=\"chip\">${s}</span>`).join(" ")}</p>`
+          )
+          .join("")}
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "商業／研究／專案能力" : "Business / Research / Project Capabilities"}</h3>
-        ${resumeData.skills.capabilities.map((c) => `<span class="chip">${langText(c)}</span>`).join(" ")}
-        <div style="margin-top:.8rem">${sourceTag(resumeData.skills.source)}</div>
+        <h3>${state.lang === "zh-Hant" ? "證照" : "Certifications"}</h3>
+        ${resumeData.skills.certifications
+          .map((cert) => `<p><strong>${langText(cert.category)}</strong><br />${cert.items.join("、")}</p>`)
+          .join("")}
       </article>`;
 
     $("#skillBlocks").innerHTML = skillHtml;
@@ -126,6 +129,7 @@
 
   function renderEvidence() {
     $("#evidenceHint").textContent = t("evidenceEmpty");
+    $("#downloadEvidenceTemplate").textContent = t("evidenceDownload");
     const visibleItems = resumeData.evidence.filter((item) => item.visible);
 
     if (!visibleItems.length) {
@@ -145,11 +149,70 @@
       .join("");
   }
 
+  function collectMissingItems() {
+    const missing = [];
+    const push = (path, value) => {
+      if (typeof value === "string" && (value.trim() === "" || value.includes("TODO"))) {
+        missing.push(path);
+      }
+    };
+
+    push("contact.github", resumeData.contact.github);
+    push("contact.linkedin", resumeData.contact.linkedin);
+    push("profilePhoto (replace placeholder if needed)", resumeData.profilePhoto.includes("placeholder") ? "TODO" : "");
+
+    resumeData.projects.forEach((project, idx) => {
+      push(`projects[${idx}].awardsOrFunding.zh-Hant`, project.awardsOrFunding?.["zh-Hant"]);
+      push(`projects[${idx}].awardsOrFunding.en`, project.awardsOrFunding?.en);
+    });
+
+    resumeData.evidence.forEach((item, idx) => {
+      push(`evidence[${idx}].date`, item.date);
+      push(`evidence[${idx}].link`, item.link);
+      push(`evidence[${idx}].title.zh-Hant`, item.title?.["zh-Hant"]);
+      push(`evidence[${idx}].title.en`, item.title?.en);
+    });
+
+    return missing;
+  }
+
+  function renderChecklist() {
+    $("#checklistTitle").textContent = t("checklistTitle");
+    $("#checklistHint").textContent = t("checklistHint");
+    const missing = collectMissingItems();
+    $("#checklistItems").innerHTML = missing.length
+      ? missing.map((field) => `<li><span>${field}</span><strong>TODO</strong></li>`).join("")
+      : `<li><span>${state.lang === "zh-Hant" ? "目前沒有待補欄位" : "No missing fields detected"}</span></li>`;
+  }
+
+  function setupEvidenceTemplateDownload() {
+    const button = $("#downloadEvidenceTemplate");
+    button.onclick = () => {
+      const template = {
+        date: "YYYY-MM-DD",
+        type: "news | evidence | award | activity",
+        title: { "zh-Hant": "標題", en: "Title" },
+        description: { "zh-Hant": "簡述", en: "Summary" },
+        link: "https://...",
+        visible: true
+      };
+      const blob = new Blob([JSON.stringify(template, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "evidence-template.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
+  }
+
   function renderContact() {
     const contacts = [
-      ["Email", resumeData.contact.email, `mailto:${resumeData.contact.email}`],
+      [
+        "Email",
+        resumeData.contact.email,
+        resumeData.contact.email.includes("@") ? `mailto:${resumeData.contact.email}` : ""
+      ],
       [state.lang === "zh-Hant" ? "手機" : "Phone", resumeData.contact.phone, `tel:${resumeData.contact.phone}`],
-      [state.lang === "zh-Hant" ? "地區" : "Location", langText(resumeData.contact.location), ""],
       ["GitHub", resumeData.contact.github || "TODO", resumeData.contact.github],
       ["LinkedIn", resumeData.contact.linkedin || "TODO", resumeData.contact.linkedin]
     ];
@@ -180,9 +243,11 @@
     renderAwards();
     renderSkills();
     renderEvidence();
+    renderChecklist();
     renderContact();
     applyLanguageAttrs();
     bindActiveSectionObserver();
+    setupEvidenceTemplateDownload();
   }
 
   function bindActiveSectionObserver() {

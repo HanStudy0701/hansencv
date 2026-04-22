@@ -1,13 +1,9 @@
 /**
  * Resume data source.
- *
- * Maintenance notes:
- * 1) Please treat records marked source="104" as the current truth.
- * 2) If content conflicts with old PDF CVs, keep 104 version and add a note.
- * 3) Evidence/news cards are intentionally data-driven for easy future updates.
+ * Keep this file as the single source of truth for content updates.
  */
 const resumeData = {
-  profilePhoto: "assets/profile-placeholder.svg", // TODO: replace with real headshot file, e.g. assets/profile.jpg
+  profilePhoto: "assets/profile-placeholder.svg", // TODO: replace with real headshot file
   defaultLang: "zh-Hant",
   languages: ["zh-Hant", "en"],
   navOrder: ["about", "experience", "projects", "awards", "skills", "evidence", "contact"],
@@ -26,25 +22,25 @@ const resumeData = {
         nameZh: "鄧翰升",
         nameEn: "TENG HAN SEN",
         title: "MBA × ESG × 商業分析 × 專案協作",
-        intro:
-          "目前就讀政大企研所（MBA），具備跨域學習與專案協作經驗，聚焦 ESG、數據分析與商業問題解決。",
-        badges: ["104 最新版本優先", "可持續更新網站", "雙語履歷"]
+        intro: "目前就讀政大企研所（MBA），具備跨域學習與專案協作經驗，聚焦 ESG、數據分析與商業問題解決。",
+        badges: ["可持續更新網站", "雙語履歷"]
       },
       about: {
         heading: "關於我",
         summary:
-          "我是鄧翰升，來自馬來西亞，現於台灣就讀國立政治大學企業管理研究所。根據目前 104 最新履歷資料，我的求職定位聚焦於商業分析、ESG 相關研究與專案執行角色。"
+          "我是鄧翰升，來自馬來西亞，現於台灣就讀國立政治大學企業管理研究所。求職定位聚焦於商業分析、ESG 研究與專案執行角色。"
       },
-      sectionSubtitle: "內容依 104 最新資料整理；若有未完整欄位已保留可擴充位置。",
+      sectionSubtitle: "內容可持續擴充，未完整欄位已保留後續更新空間。",
       labels: {
         role: "職稱",
         period: "期間",
-        location: "地點",
-        source104: "104",
-        sourceSupp: "補充"
+        gpa: "GPA"
       },
       contactTitle: "聯絡方式",
       evidenceEmpty: "可於 data.js 新增資料以顯示更多新聞、活動、成果與證明文件。",
+      evidenceDownload: "下載 Evidence 範本",
+      checklistTitle: "待補充內容檢查清單",
+      checklistHint: "系統會自動列出目前資料中仍為 TODO 或空白的欄位。",
       footer: "© 2026 Teng Han Sen · Built for GitHub Pages"
     },
     en: {
@@ -62,24 +58,25 @@ const resumeData = {
         nameEn: "TENG HAN SEN",
         title: "MBA × ESG × Business Analytics × Project Collaboration",
         intro:
-          "Currently an MBA candidate at NCCU with cross-functional training and hands-on project collaboration experience in ESG, analytics, and structured problem solving.",
-        badges: ["104-first content policy", "Maintainable architecture", "Bilingual resume site"]
+          "Currently an MBA candidate at NCCU with cross-functional training and project collaboration experience in ESG, analytics, and structured problem solving.",
+        badges: ["Maintainable architecture", "Bilingual resume site"]
       },
       about: {
         heading: "About Me",
         summary:
-          "I am Han Sen Teng, from Malaysia, currently studying in the MBA program at National Chengchi University in Taiwan. Based on the latest 104 profile, I am targeting roles in business analysis, ESG-related research, and project execution."
+          "I am Han Sen Teng, from Malaysia, currently studying in the MBA program at National Chengchi University in Taiwan. I am targeting roles in business analysis, ESG-related research, and project execution."
       },
-      sectionSubtitle: "Compiled with latest 104 details; incomplete items are intentionally left expandable.",
+      sectionSubtitle: "Content is intentionally structured for continuous updates.",
       labels: {
         role: "Role",
         period: "Period",
-        location: "Location",
-        source104: "104",
-        sourceSupp: "Supplementary"
+        gpa: "GPA"
       },
       contactTitle: "Contact",
       evidenceEmpty: "Add records in data.js to publish more news, events, outcomes, and supporting files.",
+      evidenceDownload: "Download evidence template",
+      checklistTitle: "Missing-content checklist",
+      checklistHint: "This list is auto-generated from fields that are TODO or currently empty.",
       footer: "© 2026 Teng Han Sen · Built for GitHub Pages"
     }
   },
@@ -87,26 +84,21 @@ const resumeData = {
   quickLinks: ["contact", "experience", "projects", "skills", "evidence"],
 
   contact: {
-    email: "tenghansen@gmail.com",
+    email: "114363103.g.nccu.edu.tw",
     phone: "+886 0930-718-112",
-    location: {
-      "zh-Hant": "台北市文山區指南路二段64號（政治大學）",
-      en: "Sec. 2, Zhinan Rd., Wenshan Dist., Taipei (NCCU)"
-    },
-    github: "", // TODO: add GitHub URL if available
-    linkedin: "" // TODO: add LinkedIn URL
+    github: "",
+    linkedin: ""
   },
 
   education: [
     {
       school: { "zh-Hant": "國立政治大學 企業管理研究所（MBA）", en: "National Chengchi University, MBA" },
-      period: "2025/08 - present",
-      source: "104"
+      period: "2025/08 - present"
     },
     {
-      school: { "zh-Hant": "義守大學 經營管理學系", en: "I-Shou University, Department of Business Administration" },
+      school: { "zh-Hant": "慈濟大學", en: "Tzu Chi University" },
       period: "2021/10 - 2025/06",
-      source: "104"
+      gpa: "4.0/4.0"
     }
   ],
 
@@ -117,8 +109,8 @@ const resumeData = {
         en: "Taiwan Institute of Economic Research (Division 5)"
       },
       role: {
-        "zh-Hant": "專案工讀（永續與環境研究室）",
-        en: "Project Assistant (Sustainability & Environmental Research)"
+        "zh-Hant": "實習生（永續與環境研究室）",
+        en: "Intern (Sustainability & Environmental Research)"
       },
       period: "2025/07 - present",
       highlights: {
@@ -130,8 +122,7 @@ const resumeData = {
           "Support sustainability and environmental research tasks, including SDG/GRI/TNFD-related topics.",
           "Contribute to data collection, preliminary analysis, and research output support."
         ]
-      },
-      source: "104"
+      }
     },
     {
       organization: {
@@ -150,32 +141,9 @@ const resumeData = {
         ],
         en: [
           "Assisted project leads in progress tracking and client communication.",
-          "Handled lead management and administrative support with analytical documentation." 
+          "Handled lead management and administrative support with analytical documentation."
         ]
-      },
-      source: "104"
-    },
-    {
-      organization: {
-        "zh-Hant": "黑水虻整合綠色能源／廚餘循環專案（學校團隊）",
-        en: "Black Soldier Fly Circular Project (Green Energy & Food Waste)"
-      },
-      role: {
-        "zh-Hant": "團隊成員（創業與創新競賽題目）",
-        en: "Team Member (Entrepreneurship/Innovation Competition Track)"
-      },
-      period: "2022/09 - present",
-      highlights: {
-        "zh-Hant": [
-          "參與跨域團隊協作，聚焦廚餘循環與永續價值主張。",
-          "支援提案簡報、競賽資料與成果展示內容整合。"
-        ],
-        en: [
-          "Collaborated in a cross-disciplinary team on circular food-waste solutions.",
-          "Supported proposal decks, competition materials, and outcome storytelling."
-        ]
-      },
-      source: "104"
+      }
     }
   ],
 
@@ -183,16 +151,16 @@ const resumeData = {
     {
       key: "bsf-circular",
       title: {
-        "zh-Hant": "黑水虻整合綠色能源／廚餘循環亮點專案",
-        en: "Featured Project: Black Soldier Fly Circular Economy Initiative"
+        "zh-Hant": "黑水虻整合綠色能源去化廚餘專案（學校團隊）",
+        en: "Black Soldier Fly Green Energy & Food Waste Reduction Project (University Team)"
       },
       background: {
         "zh-Hant": "以廚餘循環利用為核心，結合永續與商業提案思維，作為創新競賽與跨領域協作主題。",
         en: "A circular food-waste initiative integrating sustainability and business proposal design for innovation competitions."
       },
       role: {
-        "zh-Hant": "團隊成員，負責資料整理、簡報敘事與專案協作。",
-        en: "Team member focusing on research synthesis, pitch narrative, and cross-functional coordination."
+        "zh-Hant": "團隊隊長",
+        en: "Team Leader"
       },
       actions: {
         "zh-Hant": ["盤點循環流程與價值鏈邏輯。", "協助提案內容結構化與競賽簡報製作。"],
@@ -203,10 +171,9 @@ const resumeData = {
         en: ["Established a project structure that can scale into ESG/circular-economy case development."]
       },
       awardsOrFunding: {
-        "zh-Hant": "TODO：請依 104 最新版本補充實際獲獎／補助名稱與年份。",
-        en: "TODO: Add exact award/funding names and years from latest 104 records."
-      },
-      source: "104"
+        "zh-Hant": "TODO：請補充實際獲獎／補助名稱與年份。",
+        en: "TODO: Add exact award/funding names and years."
+      }
     }
   ],
 
@@ -216,37 +183,64 @@ const resumeData = {
         "zh-Hant": "TBSA 初級商務企劃能力檢定",
         en: "TBSA Entry-Level Business Planning Certification"
       },
-      year: "2024",
-      source: "104"
+      year: "2024"
     },
     {
       title: {
         "zh-Hant": "PMA 專案助理證照",
         en: "PMA Project Assistant Certificate"
       },
-      year: "2024",
-      source: "104"
+      year: "2024"
     },
     {
       title: {
-        "zh-Hant": "ISO 14064-1:2018 溫室氣體內部查證課程",
-        en: "ISO 14064-1:2018 Internal Verification Training"
+        "zh-Hant": "ISO 14064-1",
+        en: "ISO 14064-1"
       },
-      year: "2023",
-      source: "104"
+      year: "2023"
     }
   ],
 
   skills: {
-    languages: ["中文（流利）", "英文（中上）", "馬來文（日常溝通）"],
-    tools: ["Excel", "PowerPoint", "Word", "Canva", "ChatGPT"],
-    capabilities: [
-      { "zh-Hant": "商業分析與資料整理", en: "Business analysis & data synthesis" },
-      { "zh-Hant": "ESG / 永續研究支援", en: "ESG / sustainability research support" },
-      { "zh-Hant": "專案協作與溝通", en: "Project collaboration & communication" },
-      { "zh-Hant": "跨文化適應力", en: "Cross-cultural adaptability" }
+    languageProficiency: [
+      {
+        language: { "zh-Hant": "中文", en: "Chinese" },
+        levels: { "zh-Hant": "聽/精通 說/精通 讀/精通 寫/精通", en: "Listening/Fluent Speaking/Fluent Reading/Fluent Writing/Fluent" }
+      },
+      {
+        language: { "zh-Hant": "英文", en: "English" },
+        levels: { "zh-Hant": "聽/中等 說/中等 讀/中等 寫/中等", en: "Listening/Intermediate Speaking/Intermediate Reading/Intermediate Writing/Intermediate" }
+      },
+      {
+        language: { "zh-Hant": "馬來文", en: "Malay" },
+        levels: { "zh-Hant": "聽/中等 說/中等 讀/中等 寫/中等", en: "Listening/Intermediate Speaking/Intermediate Reading/Intermediate Writing/Intermediate" }
+      }
     ],
-    source: "104"
+    specialties: [
+      {
+        group: "Microsoft Office",
+        hashtags: [
+          "#文件或資料輸入建檔處理",
+          "#文書處理╱排版能力",
+          "#文件收發與檔案管理",
+          "#行政事務處理",
+          "#Word",
+          "#Excel",
+          "#PowerPoint",
+          "#VBA"
+        ]
+      },
+      {
+        group: "Adobe",
+        hashtags: ["#基礎多媒體影像處理", "#Adobe InDesign", "#Illustrator", "#Premiere"]
+      }
+    ],
+    certifications: [
+      { category: { "zh-Hant": "Adobe", en: "Adobe" }, items: ["ACP InDesign 2020"] },
+      { category: { "zh-Hant": "專案管理", en: "Project Management" }, items: ["PMA 專案助理"] },
+      { category: { "zh-Hant": "企劃相關證照", en: "Planning Certificates" }, items: ["TBSA商務企劃能力初級檢定"] },
+      { category: { "zh-Hant": "其他證照", en: "Other Certificates" }, items: ["ISO 14064-1"] }
+    ]
   },
 
   evidence: [
