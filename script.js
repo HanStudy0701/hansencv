@@ -4,6 +4,30 @@
   const state = { lang: resumeData.defaultLang || "zh-Hant" };
   const $ = (selector) => document.querySelector(selector);
 
+
+  function showDataError(message) {
+    let banner = document.getElementById("dataErrorBanner");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "dataErrorBanner";
+      banner.className = "data-error-banner";
+      document.body.prepend(banner);
+    }
+    banner.textContent = message;
+  }
+
+  function validateResumeDataShape() {
+    const requiredTopLevelKeys = ["i18n", "contact", "education", "navOrder"];
+    const missingKeys = requiredTopLevelKeys.filter((key) => !(key in resumeData));
+
+    if (missingKeys.length) {
+      throw new Error(`resumeData 缺少必要欄位: ${missingKeys.join(", ")}`);
+    }
+
+    if (!resumeData.i18n?.[state.lang]) {
+      throw new Error(`找不到語系資料: ${state.lang}`);
+    }
+  }
   function t(path) {
     return path.split(".").reduce((acc, key) => acc?.[key], resumeData.i18n[state.lang]);
   }
@@ -258,5 +282,11 @@
     renderAll();
   });
 
-  renderAll();
+  try {
+    validateResumeDataShape();
+    renderAll();
+  } catch (error) {
+    console.error("Resume rendering failed:", error);
+    showDataError("內容載入失敗：請檢查 data.js 格式或欄位是否完整。");
+  }
 })();
