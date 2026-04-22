@@ -9,9 +9,6 @@ Bilingual (Traditional Chinese / English) resume website for GitHub Pages.
 - `script.js`: rendering, language toggle, smooth navigation behavior
 - `data.js`: maintainable content source
 - `assets/`: images (replace `profile-placeholder.svg` with real profile photo)
-- Evidence section includes:
-  - auto-generated missing-content checklist (TODO/empty field detection)
-  - downloadable `evidence-template.json`
 
 ## Update workflow
 

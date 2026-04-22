@@ -1,11 +1,6 @@
-/**
- * Resume data source.
- * Keep this file as the single source of truth for content updates.
- */
 const resumeData = {
-  profilePhoto: "assets/profile-placeholder.svg", // TODO: replace with real headshot file
+  profilePhoto: "assets/profile-placeholder.svg",
   defaultLang: "zh-Hant",
-  languages: ["zh-Hant", "en"],
   navOrder: ["about", "experience", "projects", "awards", "skills", "evidence", "contact"],
   i18n: {
     "zh-Hant": {
@@ -22,26 +17,31 @@ const resumeData = {
         nameZh: "鄧翰升",
         nameEn: "TENG HAN SEN",
         title: "MBA × ESG × 商業分析 × 專案協作",
-        intro: "目前就讀政大企研所（MBA），具備跨域學習與專案協作經驗，聚焦 ESG、數據分析與商業問題解決。",
-        badges: ["可持續更新網站", "雙語履歷"]
+        intro:
+          "目前就讀國立政治大學企業管理研究所（MBA），具備跨域學習、研究支援、數據整理分析與專案協作經驗，持續累積 ESG、商業分析與 AI 輔助實作能力。",
+        ctas: [
+          { label: "查看經歷", target: "experience" },
+          { label: "查看專案", target: "projects" },
+          { label: "聯絡方式", target: "contact" }
+        ]
       },
       about: {
         heading: "關於我",
         summary:
-          "我是鄧翰升，來自馬來西亞，現於台灣就讀國立政治大學企業管理研究所。求職定位聚焦於商業分析、ESG 研究與專案執行角色。"
+          "我是鄧翰升，來自馬來西亞，現於台灣就讀國立政治大學企業管理研究所。過去累積了永續議題研究支援、數據整理分析、簡報製作與專案協作經驗，也持續透過實作方式探索 AI 工具在網站建置、內容整理與問題解決上的應用。整體關注主軸包括 ESG、商業分析、跨域協作，以及將複雜資訊整理成具結構、可執行內容的能力。"
       },
-      sectionSubtitle: "內容可持續擴充，未完整欄位已保留後續更新空間。",
+      sectionSubtitle: "個人履歷網站 / 個人介紹網站 / 個人作品型網站",
       labels: {
-        role: "職稱",
+        role: "角色",
         period: "期間",
-        gpa: "GPA"
+        gpa: "GPA",
+        responsibilities: "負責內容",
+        outcomes: "成果",
+        type: "類型"
       },
       contactTitle: "聯絡方式",
-      evidenceEmpty: "可於 data.js 新增資料以顯示更多新聞、活動、成果與證明文件。",
-      evidenceDownload: "下載 Evidence 範本",
-      checklistTitle: "待補充內容檢查清單",
-      checklistHint: "系統會自動列出目前資料中仍為 TODO 或空白的欄位。",
-      footer: "© 2026 Teng Han Sen · Built for GitHub Pages"
+      evidenceTitle: "相關專案成果、活動紀錄與補充資料將持續更新。",
+      footer: "© 2026 Teng Han Sen · Personal Profile Website"
     },
     en: {
       nav: {
@@ -56,49 +56,49 @@ const resumeData = {
       hero: {
         nameZh: "鄧翰升",
         nameEn: "TENG HAN SEN",
-        title: "MBA × ESG × Business Analytics × Project Collaboration",
+        title: "MBA × ESG × 商業分析 × 專案協作",
         intro:
-          "Currently an MBA candidate at NCCU with cross-functional training and project collaboration experience in ESG, analytics, and structured problem solving.",
-        badges: ["Maintainable architecture", "Bilingual resume site"]
+          "MBA student at National Chengchi University with experience in cross-disciplinary learning, research support, data analysis, and project collaboration. Continuously building capabilities in ESG, business analysis, and AI-assisted execution.",
+        ctas: [
+          { label: "View Experience", target: "experience" },
+          { label: "View Projects", target: "projects" },
+          { label: "Contact", target: "contact" }
+        ]
       },
       about: {
         heading: "About Me",
         summary:
-          "I am Han Sen Teng, from Malaysia, currently studying in the MBA program at National Chengchi University in Taiwan. I am targeting roles in business analysis, ESG-related research, and project execution."
+          "I am TENG HAN SEN from Malaysia and currently pursuing an MBA at National Chengchi University in Taiwan. My experience includes ESG-related research support, data organization and analysis, presentation preparation, and project collaboration. I also continue to explore how AI tools can be applied to website building, content structuring, and practical problem-solving. My work centers around ESG, business analysis, cross-functional collaboration, and the ability to turn complex information into clear and actionable output."
       },
-      sectionSubtitle: "Content is intentionally structured for continuous updates.",
+      sectionSubtitle: "Personal Resume / Profile / Portfolio Website",
       labels: {
         role: "Role",
         period: "Period",
-        gpa: "GPA"
+        gpa: "GPA",
+        responsibilities: "Responsibilities",
+        outcomes: "Outcomes",
+        type: "Type"
       },
       contactTitle: "Contact",
-      evidenceEmpty: "Add records in data.js to publish more news, events, outcomes, and supporting files.",
-      evidenceDownload: "Download evidence template",
-      checklistTitle: "Missing-content checklist",
-      checklistHint: "This list is auto-generated from fields that are TODO or currently empty.",
-      footer: "© 2026 Teng Han Sen · Built for GitHub Pages"
+      evidenceTitle: "Additional project evidence, activity records, and supporting materials will be updated over time.",
+      footer: "© 2026 Teng Han Sen · Personal Profile Website"
     }
   },
 
-  quickLinks: ["contact", "experience", "projects", "skills", "evidence"],
-
   contact: {
-    email: "114363103.g.nccu.edu.tw",
-    phone: "+886 0930-718-112",
-    github: "",
-    linkedin: ""
+    emails: ["114363103@g.nccu.edu.tw", "tenghansen@gmail.com"],
+    phone: "+886 0930-718-112"
   },
 
   education: [
     {
       school: { "zh-Hant": "國立政治大學 企業管理研究所（MBA）", en: "National Chengchi University, MBA" },
-      period: "2025/08 - present"
+      period: { "zh-Hant": "2025/08 – 至今", en: "2025/08 – Present" }
     },
     {
-      school: { "zh-Hant": "慈濟大學", en: "Tzu Chi University" },
-      period: "2021/10 - 2025/06",
-      gpa: "4.0/4.0"
+      school: { "zh-Hant": "慈濟大學 經營管理學系", en: "Tzu Chi University, Department of Business Administration" },
+      period: { "zh-Hant": "2021/10 – 2025/06", en: "2021/10 – 2025/06" },
+      gpa: "4.0 / 4.0"
     }
   ],
 
@@ -109,18 +109,20 @@ const resumeData = {
         en: "Taiwan Institute of Economic Research (Division 5)"
       },
       role: {
-        "zh-Hant": "實習生（永續與環境研究室）",
-        en: "Intern (Sustainability & Environmental Research)"
+        "zh-Hant": "實習生｜永續與環境研究室",
+        en: "Intern | Sustainability and Environmental Research Office"
       },
-      period: "2025/07 - present",
+      period: { "zh-Hant": "2025/07 – 至今", en: "2025/07 – Present" },
       highlights: {
         "zh-Hant": [
-          "參與碳盤查與永續指標相關研究支援（含 SDG、GRI、TNFD 等主題）。",
-          "協助資料蒐整、初步分析與研究產出支援。"
+          "協助蒐整與整理 SDG、GRI、TNFD 等永續相關框架資料，支援研究主題分析與內容產出。",
+          "參與能源與永續議題之資料彙整、初步分析與簡報製作，協助將政策與產業資訊轉化為可用研究素材。",
+          "支援研究與專案行政協作，提升資料整合效率與後續溝通順暢度。"
         ],
         en: [
-          "Support sustainability and environmental research tasks, including SDG/GRI/TNFD-related topics.",
-          "Contribute to data collection, preliminary analysis, and research output support."
+          "Collected and organized sustainability framework materials, including SDG, GRI, and TNFD, to support thematic analysis and research output.",
+          "Contributed to data consolidation, preliminary analysis, and presentation preparation on energy and sustainability topics, turning policy and industry information into usable research input.",
+          "Supported research and project administration workflows to improve data integration efficiency and communication flow."
         ]
       }
     },
@@ -131,17 +133,19 @@ const resumeData = {
       },
       role: {
         "zh-Hant": "服務推廣（SD）部門實習生",
-        en: "Service Promotion (SD) Intern"
+        en: "Service Promotion (SD) Department Intern"
       },
-      period: "2024/07 - 2025/06",
+      period: { "zh-Hant": "2024/07 – 2025/06", en: "2024/07 – 2025/06" },
       highlights: {
         "zh-Hant": [
-          "協助專案負責人追蹤客戶進度與溝通協調。",
-          "彙整案源與行政支援，參與後續分析資料整理。"
+          "協助專案負責人進行進度追蹤、資料整理與溝通協調，支持專案流程穩定推進。",
+          "彙整營運與專案相關資訊，協助製作分析資料與行政支援內容。",
+          "參與後續資料整理與簡報支援，提升團隊資訊整合效率。"
         ],
         en: [
-          "Assisted project leads in progress tracking and client communication.",
-          "Handled lead management and administrative support with analytical documentation."
+          "Supported project leads with progress tracking, documentation, and communication coordination to keep project execution stable.",
+          "Consolidated operational and project-related information to assist with analytical materials and administrative support.",
+          "Contributed to follow-up data organization and presentation support, improving team information integration efficiency."
         ]
       }
     }
@@ -149,31 +153,80 @@ const resumeData = {
 
   projects: [
     {
-      key: "bsf-circular",
       title: {
-        "zh-Hant": "黑水虻整合綠色能源去化廚餘專案（學校團隊）",
-        en: "Black Soldier Fly Green Energy & Food Waste Reduction Project (University Team)"
-      },
-      background: {
-        "zh-Hant": "以廚餘循環利用為核心，結合永續與商業提案思維，作為創新競賽與跨領域協作主題。",
-        en: "A circular food-waste initiative integrating sustainability and business proposal design for innovation competitions."
+        "zh-Hant": "黑水虻整合綠色能源去化廚餘專案",
+        en: "Black Soldier Fly Green Energy & Food Waste Reduction Project"
       },
       role: {
-        "zh-Hant": "團隊隊長",
-        en: "Team Leader"
+        "zh-Hant": "團隊隊長｜學校跨域團隊",
+        en: "Team Leader | Cross-disciplinary University Team"
       },
-      actions: {
-        "zh-Hant": ["盤點循環流程與價值鏈邏輯。", "協助提案內容結構化與競賽簡報製作。"],
-        en: ["Mapped circular workflow and value chain logic.", "Helped structure proposal content and competition decks."]
+      intro: {
+        "zh-Hant": "以廚餘循環利用為核心，結合永續議題、技術應用與商業提案思維，發展具延伸性的校園／場域應用方案。",
+        en: "Focused on circular food-waste utilization by integrating sustainability issues, technical application, and business proposal thinking to build scalable campus/field solutions."
+      },
+      responsibilities: {
+        "zh-Hant": [
+          "統整專案方向與團隊分工，協調研究、提案與簡報製作進度。",
+          "盤點循環流程、價值鏈邏輯與應用情境，協助建立專案整體架構。",
+          "將永續與技術內容轉化為較易理解的提案敘事，用於競賽與對外簡報。"
+        ],
+        en: [
+          "Led project direction and team task allocation, coordinating research, proposal development, and presentation timelines.",
+          "Mapped circular process design, value-chain logic, and application scenarios to establish the project framework.",
+          "Translated sustainability and technical content into clearer proposal narratives for competitions and external presentations."
+        ]
       },
       outcomes: {
-        "zh-Hant": ["已具備可延伸為 ESG／循環經濟案例的專案架構。"],
-        en: ["Established a project structure that can scale into ESG/circular-economy case development."]
+        "zh-Hant": [
+          "專案已發展為可延伸的 ESG／循環經濟案例。",
+          "具備研究、提案與競賽展示基礎，可持續補充後續成果與獲獎資訊。"
+        ],
+        en: [
+          "Developed into an extendable ESG/circular-economy case.",
+          "Built a solid base for research, proposal delivery, and competition presentation, with room for future evidence and awards updates."
+        ]
       },
-      awardsOrFunding: {
-        "zh-Hant": "TODO：請補充實際獲獎／補助名稱與年份。",
-        en: "TODO: Add exact award/funding names and years."
-      }
+      tags: ["ESG", "Circular Economy", "Project Leadership"]
+    },
+    {
+      title: {
+        "zh-Hant": "AI 輔助網站建置實作",
+        en: "AI-Assisted Website Building Practice"
+      },
+      role: {
+        "zh-Hant": "個人實作專案",
+        en: "Personal Practice Project"
+      },
+      intro: {
+        "zh-Hant": "雖然我本身是商管背景，但近期在 Claude Code 協作下，從零協助親戚公司建置官方網站，包含網站架構規劃、內容整理、介面調整、功能測試與上線前迭代。過程中持續透過 Prompt Engineering 快速生成 MVP，並反覆進行 debug 與優化，累積 AI 輔助開發的實作經驗。",
+        en: "Although my core background is business and management, I recently collaborated with Claude Code to help a relative's company build an official website from scratch. The process covered site architecture planning, content structuring, UI adjustments, functional testing, and pre-launch iteration. Through prompt engineering, I rapidly generated MVPs and repeatedly debugged and optimized them, building practical experience in AI-assisted development."
+      },
+      responsibilities: {
+        "zh-Hant": [
+          "協助釐清網站需求與內容架構，整理前台資訊呈現方式。",
+          "與 AI 工具協作進行頁面生成、功能調整、問題排查與反覆迭代。",
+          "參與網站測試與上線流程，將想法快速轉化為可驗證的 MVP。"
+        ],
+        en: [
+          "Clarified website requirements and content architecture, and organized front-end information structure.",
+          "Collaborated with AI tools for page generation, feature adjustment, troubleshooting, and iterative refinements.",
+          "Participated in testing and launch workflows, turning ideas into verifiable MVPs quickly."
+        ]
+      },
+      outcomes: {
+        "zh-Hant": [
+          "前台測試版已上線：https://www.computex.com.my/",
+          "累積 AI 輔助網站建置、Prompt Engineering 與 debug iteration 的實作經驗。",
+          "形成從需求理解、原型生成到測試修正的完整實作循環。"
+        ],
+        en: [
+          "A front-end test version is online: https://www.computex.com.my/",
+          "Built practical experience in AI-assisted website development, prompt engineering, and debug iteration.",
+          "Established an end-to-end cycle from requirement understanding and prototype generation to testing and refinement."
+        ]
+      },
+      tags: ["AI-assisted development", "Prompt Engineering", "MVP iteration", "Vibe Coding"]
     }
   ],
 
@@ -202,69 +255,50 @@ const resumeData = {
   ],
 
   skills: {
-    languageProficiency: [
+    languageGroup: [
       {
-        language: { "zh-Hant": "中文", en: "Chinese" },
-        levels: { "zh-Hant": "聽/精通 說/精通 讀/精通 寫/精通", en: "Listening/Fluent Speaking/Fluent Reading/Fluent Writing/Fluent" }
+        zh: "中文：流利",
+        en: "Mandarin Chinese: Fluent"
       },
       {
-        language: { "zh-Hant": "英文", en: "English" },
-        levels: { "zh-Hant": "聽/中等 說/中等 讀/中等 寫/中等", en: "Listening/Intermediate Speaking/Intermediate Reading/Intermediate Writing/Intermediate" }
+        zh: "英文：中等",
+        en: "English: Intermediate"
       },
       {
-        language: { "zh-Hant": "馬來文", en: "Malay" },
-        levels: { "zh-Hant": "聽/中等 說/中等 讀/中等 寫/中等", en: "Listening/Intermediate Speaking/Intermediate Reading/Intermediate Writing/Intermediate" }
+        zh: "馬來文：日常溝通",
+        en: "Malay: Conversational"
       }
     ],
-    specialties: [
-      {
-        group: "Microsoft Office",
-        hashtags: [
-          "#文件或資料輸入建檔處理",
-          "#文書處理╱排版能力",
-          "#文件收發與檔案管理",
-          "#行政事務處理",
-          "#Word",
-          "#Excel",
-          "#PowerPoint",
-          "#VBA"
-        ]
-      },
-      {
-        group: "Adobe",
-        hashtags: ["#基礎多媒體影像處理", "#Adobe InDesign", "#Illustrator", "#Premiere"]
-      }
+    tools: ["Excel", "PowerPoint", "Word", "Canva", "Adobe InDesign", "Illustrator", "Premiere"],
+    aiWeb: [
+      { "zh-Hant": "Prompt Engineering", en: "Prompt Engineering" },
+      { "zh-Hant": "Claude Code 協作實作", en: "Claude Code collaboration practice" },
+      { "zh-Hant": "AI 輔助網站建置", en: "AI-assisted website building" },
+      { "zh-Hant": "MVP 快速生成與迭代", en: "Rapid MVP generation and iteration" },
+      { "zh-Hant": "Debug 與問題排查", en: "Debugging and troubleshooting" },
+      { "zh-Hant": "內容結構整理", en: "Content structuring" }
     ],
-    certifications: [
-      { category: { "zh-Hant": "Adobe", en: "Adobe" }, items: ["ACP InDesign 2020"] },
-      { category: { "zh-Hant": "專案管理", en: "Project Management" }, items: ["PMA 專案助理"] },
-      { category: { "zh-Hant": "企劃相關證照", en: "Planning Certificates" }, items: ["TBSA商務企劃能力初級檢定"] },
-      { category: { "zh-Hant": "其他證照", en: "Other Certificates" }, items: ["ISO 14064-1"] }
+    core: [
+      { "zh-Hant": "資料整理與分析", en: "Data organization and analysis" },
+      { "zh-Hant": "簡報製作", en: "Presentation preparation" },
+      { "zh-Hant": "專案協作", en: "Project collaboration" },
+      { "zh-Hant": "研究支援", en: "Research support" },
+      { "zh-Hant": "跨域溝通", en: "Cross-functional communication" },
+      { "zh-Hant": "問題拆解與執行", en: "Problem decomposition and execution" }
     ]
   },
 
   evidence: [
     {
       date: "",
-      type: "news",
-      title: { "zh-Hant": "TODO：新聞報導標題", en: "TODO: News title" },
+      type: { "zh-Hant": "網站實作", en: "Website Practice" },
+      title: { "zh-Hant": "Computex 公司網站測試版", en: "Computex Company Website Test Version" },
       description: {
-        "zh-Hant": "請填入與專案、競賽或研究相關的新聞摘要。",
-        en: "Add a concise summary for project/competition/research news."
+        "zh-Hant": "前台測試版連結。",
+        en: "Front-end test version link."
       },
-      link: "",
-      visible: false
-    },
-    {
-      date: "",
-      type: "evidence",
-      title: { "zh-Hant": "TODO：佐證文件名稱", en: "TODO: Evidence file title" },
-      description: {
-        "zh-Hant": "可放證照、活動證明、成果連結。",
-        en: "Use for certificates, event proof, and outcome links."
-      },
-      link: "",
-      visible: false
+      link: "https://www.computex.com.my/",
+      visible: true
     }
   ]
 };
