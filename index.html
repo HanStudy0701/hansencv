@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Teng Han Sen bilingual CV website - MBA, ESG, business analytics, and project collaboration"
+    />
+    <title>Teng Han Sen | Bilingual CV Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <div class="container nav-wrap">
+        <a class="brand" href="#top">THS CV</a>
+        <nav aria-label="Primary">
+          <ul id="navList" class="nav-list"></ul>
+        </nav>
+        <button id="langToggle" class="lang-toggle" type="button" aria-label="Toggle language">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="badge">Latest: 104</p>
+            <h1><span id="nameZh"></span><small id="nameEn"></small></h1>
+            <p id="heroTitle" class="hero-title"></p>
+            <p id="heroIntro" class="hero-intro"></p>
+            <div id="heroBadges" class="hero-badges"></div>
+            <div id="quickLinks" class="quick-links"></div>
+          </div>
+          <div class="hero-photo-wrap">
+            <img id="profilePhoto" class="hero-photo" alt="Profile photo" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container">
+          <h2 id="aboutTitle"></h2>
+          <p id="aboutSubtitle" class="section-subtitle"></p>
+          <p id="aboutSummary"></p>
+          <div id="educationList" class="grid-cards"></div>
+        </div>
+      </section>
+
+      <section class="section" id="experience">
+        <div class="container">
+          <h2 data-nav="experience"></h2>
+          <div id="experienceList" class="timeline"></div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <h2 data-nav="projects"></h2>
+          <div id="projectList" class="grid-cards"></div>
+        </div>
+      </section>
+
+      <section class="section" id="awards">
+        <div class="container">
+          <h2 data-nav="awards"></h2>
+          <ul id="awardList" class="clean-list"></ul>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <div class="container">
+          <h2 data-nav="skills"></h2>
+          <div id="skillBlocks" class="skills-layout"></div>
+        </div>
+      </section>
+
+      <section class="section" id="evidence">
+        <div class="container">
+          <h2 data-nav="evidence"></h2>
+          <p class="section-subtitle" id="evidenceHint"></p>
+          <div id="evidenceList" class="grid-cards"></div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container">
+          <h2 id="contactTitle"></h2>
+          <div id="contactList" class="contact-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container" id="footerText"></div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
