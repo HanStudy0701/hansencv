@@ -42,14 +42,19 @@
     $("#heroIntro").textContent = hero.intro;
     $("#profilePhoto").src = resumeData.profilePhoto;
 
+    $("#heroContacts").innerHTML = `
+      ${(resumeData.contact.emails || [])
+        .map((email) => `<a href="mailto:${email}">${email}</a>`)
+        .join("")}
+      ${resumeData.contact.phone ? `<a href="tel:${resumeData.contact.phone}">${resumeData.contact.phone}</a>` : ""}
+    `;
+
     $("#quickLinks").innerHTML = (hero.ctas || []).map((cta) => `<a href="#${cta.target}">${cta.label}</a>`).join("");
 
     const wrap = $("#pdfButtonWrap");
-    if (resumeData.resumePdfPath) {
-      wrap.innerHTML = `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noreferrer noopener">${hero.downloadLabel}</a>`;
-    } else {
-      wrap.innerHTML = "";
-    }
+    wrap.innerHTML = resumeData.resumePdfPath
+      ? `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noreferrer noopener">${hero.downloadLabel}</a>`
+      : "";
   }
 
   function renderAbout() {
@@ -62,7 +67,8 @@
         (item) => `
           <article class="card">
             <h3>${langText(item.school)}</h3>
-            <p class="meta">${t("labels.period")}: ${langText(item.period)}</p>
+            ${item.degree ? `<p class="meta">${t("labels.degree")}: ${langText(item.degree)}</p>` : ""}
+            ${item.period ? `<p class="meta">${t("labels.period")}: ${langText(item.period)}</p>` : ""}
             ${item.gpa ? `<p><span class="gpa-pill">${t("labels.gpa")}: ${item.gpa}</span></p>` : ""}
           </article>`
       )
@@ -78,10 +84,9 @@
       .map((item) => {
         const bullets = (item.highlights?.[state.lang] || []).map((line) => `<li>${line}</li>`).join("");
         return `
-          <article class="timeline-item card">
+          <article class="timeline-item card emphasis-card">
             <h3>${langText(item.organization)}</h3>
-            <p><strong>${t("labels.role")}:</strong> ${langText(item.role)}</p>
-            <p class="meta"><strong>${t("labels.period")}:</strong> ${langText(item.period)}</p>
+            <p><strong>${t("labels.role")}:</strong> ${langText(item.role)} ｜ ${langText(item.period)}</p>
             ${bullets ? `<ul>${bullets}</ul>` : ""}
           </article>`;
       })
@@ -98,53 +103,61 @@
         const responsibilities = (project.responsibilities?.[state.lang] || []).map((a) => `<li>${a}</li>`).join("");
         const outcomes = (project.outcomes?.[state.lang] || []).map((o) => `<li>${o}</li>`).join("");
         const tags = (project.tags || []).map((tag) => `<span class="chip">${tag}</span>`).join(" ");
-        const linkBtn = project.externalLink
-          ? `<a class="project-link" href="${project.externalLink}" target="_blank" rel="noreferrer noopener">${t("labels.viewSite")}</a>`
-          : "";
-        const snippet = langText(project.codeSnapshot);
 
         return `
           <article class="card ${project.featured ? "featured-project" : ""}">
             <h3>${langText(project.title)}</h3>
-            <p><strong>${t("labels.role")}:</strong> ${langText(project.role)}</p>
-            <p>${langText(project.intro)}</p>
+            ${project.role ? `<p><strong>${t("labels.role")}:</strong> ${langText(project.role)}</p>` : ""}
+            ${project.intro ? `<p>${langText(project.intro)}</p>` : ""}
             ${responsibilities ? `<p><strong>${t("labels.responsibilities")}</strong></p><ul>${responsibilities}</ul>` : ""}
             ${outcomes ? `<p><strong>${t("labels.outcomes")}</strong></p><ul>${outcomes}</ul>` : ""}
             ${tags ? `<div class="tag-row">${tags}</div>` : ""}
-            ${linkBtn}
-            ${snippet ? `<div class="code-card"><strong>${t("labels.codeSnapshot")}</strong><pre>${snippet}</pre></div>` : ""}
+            ${project.externalLink ? `<a class="project-link" href="${project.externalLink}" target="_blank" rel="noreferrer noopener">${t("labels.viewSite")}</a>` : ""}
           </article>`;
       })
       .join("");
   }
 
-  function renderAwards() {
-    const list = resumeData.awards || [];
-    if (!list.length) return ($("#awards").style.display = "none");
-    $("#awards").style.display = "";
+  function renderPublications() {
+    const groups = resumeData.awardsPublications || [];
+    if (!groups.length) return ($("#publications").style.display = "none");
+    $("#publications").style.display = "";
 
-    $("#awardList").innerHTML = list
-      .map((award) => `<li><span>${langText(award.title)}</span><strong class="award-year">${award.year}</strong></li>`)
+    $("#publicationGroups").innerHTML = groups
+      .map(
+        (group) => `<article class="card">
+          <h3>${langText(group.category)}</h3>
+          <ul>${(group.items || []).map((item) => `<li>${langText(item)}</li>`).join("")}</ul>
+        </article>`
+      )
       .join("");
+  }
+
+  function renderCertifications() {
+    const list = resumeData.certifications || [];
+    if (!list.length) return ($("#certifications").style.display = "none");
+    $("#certifications").style.display = "";
+
+    $("#certificationList").innerHTML = list.map((cert) => `<li><span>${langText(cert)}</span></li>`).join("");
   }
 
   function renderSkills() {
     const skills = resumeData.skills || {};
     $("#skillBlocks").innerHTML = `
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "語言能力" : "Language Proficiency"}</h3>
+        <h3>${state.lang === "zh-Hant" ? "語言能力" : "Languages"}</h3>
         ${(skills.languageGroup || []).map((item) => `<p>${state.lang === "zh-Hant" ? item.zh : item.en}</p>`).join("")}
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "數位工具 / AI 標籤" : "Digital Tools / AI Tags"}</h3>
-        <div class="tag-row">${(skills.tools || []).map((tool) => `<span class="chip">${tool}</span>`).join(" ")}</div>
+        <h3>${state.lang === "zh-Hant" ? "數位工具" : "Digital Tools"}</h3>
+        <div class="tag-row">${(skills.digitalTools || []).map((tool) => `<span class="chip">${tool}</span>`).join(" ")}</div>
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "AI 與網站實作" : "AI & Web Practice"}</h3>
-        ${(skills.aiWeb || []).map((item) => `<p>${langText(item)}</p>`).join("")}
+        <h3>${state.lang === "zh-Hant" ? "AI 與網站實作" : "AI & Website Practice"}</h3>
+        <div class="tag-row">${(skills.aiWeb || []).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "核心能力" : "Core Competencies"}</h3>
+        <h3>${state.lang === "zh-Hant" ? "核心能力" : "Core Capabilities"}</h3>
         <div class="tag-row">${(skills.core || []).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
       </article>`;
   }
@@ -178,6 +191,18 @@
       .join("");
   }
 
+  function setupBackToTop() {
+    const btn = $("#backToTopBtn");
+    btn.textContent = t("hero.backToTop");
+    const toggle = () => {
+      const show = window.scrollY > 420 || window.innerHeight + window.scrollY > document.body.offsetHeight - 240;
+      btn.classList.toggle("visible", show);
+    };
+    window.addEventListener("scroll", toggle, { passive: true });
+    toggle();
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   function applyLanguageAttrs() {
     document.documentElement.lang = state.lang;
     $("#langToggle").textContent = state.lang === "zh-Hant" ? "EN" : "中";
@@ -208,12 +233,14 @@
     renderAbout();
     renderExperience();
     renderProjects();
-    renderAwards();
+    renderPublications();
+    renderCertifications();
     renderSkills();
     renderEvidence();
     renderContact();
     applyLanguageAttrs();
     bindActiveSectionObserver();
+    setupBackToTop();
   }
 
   $("#langToggle").addEventListener("click", () => {

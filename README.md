@@ -8,7 +8,7 @@ Bilingual (Traditional Chinese / English) resume website for GitHub Pages.
 - `styles.css`: responsive, professional visual design
 - `script.js`: rendering, language toggle, smooth navigation behavior
 - `data.js`: maintainable content source
-- `assets/`: images (replace `profile-placeholder.svg` with real profile photo)
+- `assets/`: images (replace `profile-photo.svg` with real profile photo)
 - `assets/favicon.svg`: fallback favicon using initials
 
 ## Update workflow

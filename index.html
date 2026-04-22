@@ -12,7 +12,7 @@
       property="og:description"
       content="A bilingual personal resume website showcasing education, experience, projects, and AI-assisted practical work."
     />
-    <meta property="og:image" content="assets/profile-placeholder.svg" />
+    <meta property="og:image" content="assets/profile-photo.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://example.github.io/hansencv/" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -44,6 +44,7 @@
             <h1><span id="nameZh"></span><small id="nameEn"></small></h1>
             <p id="heroTitle" class="hero-title"></p>
             <p id="heroIntro" class="hero-intro"></p>
+            <div id="heroContacts" class="hero-contacts"></div>
             <div id="quickLinks" class="quick-links"></div>
             <div id="pdfButtonWrap" class="pdf-wrap"></div>
           </div>
@@ -76,10 +77,17 @@
         </div>
       </section>
 
-      <section class="section" id="awards">
+      <section class="section" id="publications">
         <div class="container">
-          <h2 data-nav="awards"></h2>
-          <ul id="awardList" class="clean-list"></ul>
+          <h2 data-nav="publications"></h2>
+          <div id="publicationGroups" class="grid-cards"></div>
+        </div>
+      </section>
+
+      <section class="section" id="certifications">
+        <div class="container">
+          <h2 data-nav="certifications"></h2>
+          <ul id="certificationList" class="clean-list"></ul>
         </div>
       </section>
 
@@ -109,6 +117,7 @@
     <footer class="site-footer">
       <div class="container" id="footerText"></div>
     </footer>
+    <button id="backToTopBtn" class="back-to-top" type="button"></button>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
