@@ -1,5 +1,13 @@
 const resumeData = {
   profilePhoto: "assets/profile-placeholder.svg",
+  siteMeta: {
+    ogTitle: "TENG HAN SEN | MBA × ESG × Business Analysis × AI-Assisted Practice",
+    ogDescription:
+      "A bilingual personal resume website showcasing education, experience, projects, and AI-assisted practical work.",
+    ogImage: "assets/profile-placeholder.svg",
+    ogUrl: "https://example.github.io/hansencv/"
+  },
+  resumePdfPath: "",
   defaultLang: "zh-Hant",
   navOrder: ["about", "experience", "projects", "awards", "skills", "evidence", "contact"],
   i18n: {
@@ -23,7 +31,8 @@ const resumeData = {
           { label: "查看經歷", target: "experience" },
           { label: "查看專案", target: "projects" },
           { label: "聯絡方式", target: "contact" }
-        ]
+        ],
+        downloadLabel: "下載 PDF 履歷"
       },
       about: {
         heading: "關於我",
@@ -37,7 +46,9 @@ const resumeData = {
         gpa: "GPA",
         responsibilities: "負責內容",
         outcomes: "成果",
-        type: "類型"
+        type: "類型",
+        viewSite: "查看網站",
+        codeSnapshot: "Code / Logic Snapshot"
       },
       contactTitle: "聯絡方式",
       evidenceTitle: "相關專案成果、活動紀錄與補充資料將持續更新。",
@@ -63,7 +74,8 @@ const resumeData = {
           { label: "View Experience", target: "experience" },
           { label: "View Projects", target: "projects" },
           { label: "Contact", target: "contact" }
-        ]
+        ],
+        downloadLabel: "Download PDF Resume"
       },
       about: {
         heading: "About Me",
@@ -77,7 +89,9 @@ const resumeData = {
         gpa: "GPA",
         responsibilities: "Responsibilities",
         outcomes: "Outcomes",
-        type: "Type"
+        type: "Type",
+        viewSite: "View Live Site",
+        codeSnapshot: "Code / Logic Snapshot"
       },
       contactTitle: "Contact",
       evidenceTitle: "Additional project evidence, activity records, and supporting materials will be updated over time.",
@@ -87,7 +101,7 @@ const resumeData = {
 
   contact: {
     emails: ["114363103@g.nccu.edu.tw", "tenghansen@gmail.com"],
-    phone: "+886 0930-718-112"
+    phone: "+886930718112"
   },
 
   education: [
@@ -192,15 +206,15 @@ const resumeData = {
     {
       title: {
         "zh-Hant": "AI 輔助網站建置實作",
-        en: "AI-Assisted Website Building Practice"
+        en: "AI-Assisted Website Development"
       },
       role: {
         "zh-Hant": "個人實作專案",
         en: "Personal Practice Project"
       },
       intro: {
-        "zh-Hant": "雖然我本身是商管背景，但近期在 Claude Code 協作下，從零協助親戚公司建置官方網站，包含網站架構規劃、內容整理、介面調整、功能測試與上線前迭代。過程中持續透過 Prompt Engineering 快速生成 MVP，並反覆進行 debug 與優化，累積 AI 輔助開發的實作經驗。",
-        en: "Although my core background is business and management, I recently collaborated with Claude Code to help a relative's company build an official website from scratch. The process covered site architecture planning, content structuring, UI adjustments, functional testing, and pre-launch iteration. Through prompt engineering, I rapidly generated MVPs and repeatedly debugged and optimized them, building practical experience in AI-assisted development."
+        "zh-Hant": "在 Claude Code 協作下，從零協助親戚公司建置官方網站，涵蓋網站架構規劃、內容整理、介面調整、功能測試與上線前迭代。",
+        en: "Collaborated with Claude Code to build a company website from scratch, covering architecture planning, content structuring, UI adjustment, functional testing, and pre-launch iteration."
       },
       responsibilities: {
         "zh-Hant": [
@@ -226,7 +240,13 @@ const resumeData = {
           "Established an end-to-end cycle from requirement understanding and prototype generation to testing and refinement."
         ]
       },
-      tags: ["AI-assisted development", "Prompt Engineering", "MVP iteration", "Vibe Coding"]
+      tags: ["AI-assisted development", "Prompt Engineering", "MVP iteration", "Vibe Coding"],
+      externalLink: "https://www.computex.com.my/",
+      codeSnapshot: {
+        "zh-Hant": "Prompt → 快速產生頁面草稿 → 手動檢查 UI/文案 → Debug 與重構 → 再次驗證。",
+        en: "Prompt -> rapid page draft -> manual UI/content review -> debug and refactor -> verify again."
+      },
+      featured: true
     }
   ],
 
@@ -256,20 +276,27 @@ const resumeData = {
 
   skills: {
     languageGroup: [
-      {
-        zh: "中文：流利",
-        en: "Mandarin Chinese: Fluent"
-      },
-      {
-        zh: "英文：中等",
-        en: "English: Intermediate"
-      },
+      { zh: "中文：流利", en: "Mandarin Chinese: Fluent" },
+      { zh: "英文：中等", en: "English: Intermediate" },
       {
         zh: "馬來文：日常溝通",
-        en: "Malay: Conversational"
+        en: "Malay: Conversational, with practical familiarity for cross-cultural communication in Southeast Asia"
       }
     ],
-    tools: ["Excel", "PowerPoint", "Word", "Canva", "Adobe InDesign", "Illustrator", "Premiere"],
+    tools: [
+      "AI-Assisted Dev",
+      "Claude Code",
+      "Prompt Engineering",
+      "MVP Iteration",
+      "Debugging",
+      "Content Structuring",
+      "Excel",
+      "PowerPoint",
+      "Canva",
+      "Adobe InDesign",
+      "Illustrator",
+      "Premiere"
+    ],
     aiWeb: [
       { "zh-Hant": "Prompt Engineering", en: "Prompt Engineering" },
       { "zh-Hant": "Claude Code 協作實作", en: "Claude Code collaboration practice" },
@@ -290,13 +317,8 @@ const resumeData = {
 
   evidence: [
     {
-      date: "",
       type: { "zh-Hant": "網站實作", en: "Website Practice" },
       title: { "zh-Hant": "Computex 公司網站測試版", en: "Computex Company Website Test Version" },
-      description: {
-        "zh-Hant": "前台測試版連結。",
-        en: "Front-end test version link."
-      },
       link: "https://www.computex.com.my/",
       visible: true
     }
