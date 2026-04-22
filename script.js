@@ -53,7 +53,7 @@
 
     const wrap = $("#pdfButtonWrap");
     wrap.innerHTML = resumeData.resumePdfPath
-      ? `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noreferrer noopener">${hero.downloadLabel}</a>`
+      ? `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noopener noreferrer">${hero.downloadLabel}</a>`
       : "";
   }
 
@@ -108,11 +108,13 @@
           <article class="card ${project.featured ? "featured-project" : ""}">
             <h3>${langText(project.title)}</h3>
             ${project.role ? `<p><strong>${t("labels.role")}:</strong> ${langText(project.role)}</p>` : ""}
+            ${project.status ? `<p class="meta"><strong>${t("labels.status")}:</strong> ${langText(project.status)}</p>` : ""}
             ${project.intro ? `<p>${langText(project.intro)}</p>` : ""}
             ${responsibilities ? `<p><strong>${t("labels.responsibilities")}</strong></p><ul>${responsibilities}</ul>` : ""}
             ${outcomes ? `<p><strong>${t("labels.outcomes")}</strong></p><ul>${outcomes}</ul>` : ""}
+            ${(project.plannedKpi?.[state.lang] || []).length ? `<p><strong>${t("labels.kpi")}</strong></p><ul>${project.plannedKpi[state.lang].map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
             ${tags ? `<div class="tag-row">${tags}</div>` : ""}
-            ${project.externalLink ? `<a class="project-link" href="${project.externalLink}" target="_blank" rel="noreferrer noopener">${t("labels.viewSite")}</a>` : ""}
+            ${project.externalLink ? `<a class="project-link" href="${project.externalLink}" target="_blank" rel="noopener noreferrer">${t("labels.viewSite")}</a>` : ""}
           </article>`;
       })
       .join("");
@@ -139,6 +141,13 @@
     $("#certifications").style.display = "";
 
     $("#certificationList").innerHTML = list.map((cert) => `<li><span>${langText(cert)}</span></li>`).join("");
+  }
+
+  function renderActivities() {
+    const list = resumeData.activities || [];
+    if (!list.length) return ($("#activities").style.display = "none");
+    $("#activities").style.display = "";
+    $("#activityList").innerHTML = list.map((item) => `<li><span>${langText(item)}</span></li>`).join("");
   }
 
   function renderSkills() {
@@ -173,7 +182,7 @@
         (item) => `<article class="card">
           <p class="meta">${t("labels.type")}: ${langText(item.type)}</p>
           <h3>${langText(item.title)}</h3>
-          ${item.link ? `<a href="${item.link}" target="_blank" rel="noreferrer noopener">${item.link}</a>` : ""}
+          ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>` : ""}
         </article>`
       )
       .join("");
@@ -235,6 +244,7 @@
     renderProjects();
     renderPublications();
     renderCertifications();
+    renderActivities();
     renderSkills();
     renderEvidence();
     renderContact();

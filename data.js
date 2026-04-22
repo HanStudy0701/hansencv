@@ -9,7 +9,7 @@ const resumeData = {
   },
   resumePdfPath: "",
   defaultLang: "zh-Hant",
-  navOrder: ["about", "experience", "projects", "publications", "certifications", "skills", "evidence", "contact"],
+  navOrder: ["about", "experience", "projects", "publications", "certifications", "activities", "skills", "evidence", "contact"],
   i18n: {
     "zh-Hant": {
       nav: {
@@ -18,6 +18,7 @@ const resumeData = {
         projects: "專案",
         publications: "獎項與發表",
         certifications: "證照",
+        activities: "活動參與",
         skills: "技能",
         evidence: "佐證資料",
         contact: "聯絡方式"
@@ -49,6 +50,8 @@ const resumeData = {
         gpa: "GPA",
         responsibilities: "負責內容",
         outcomes: "成果",
+        status: "狀態",
+        kpi: "預計 KPI",
         type: "類型",
         viewSite: "查看網站",
         codeSnapshot: "Code / Logic Snapshot"
@@ -64,6 +67,7 @@ const resumeData = {
         projects: "Projects",
         publications: "Awards & Publications",
         certifications: "Certifications",
+        activities: "Activities",
         skills: "Skills",
         evidence: "Evidence",
         contact: "Contact"
@@ -95,6 +99,8 @@ const resumeData = {
         gpa: "GPA",
         responsibilities: "Responsibilities",
         outcomes: "Outcomes",
+        status: "Status",
+        kpi: "Planned KPI",
         type: "Type",
         viewSite: "View Live Site",
         codeSnapshot: "Code / Logic Snapshot"
@@ -208,6 +214,7 @@ const resumeData = {
     {
       title: { "zh-Hant": "AI 輔助網站建置實作", en: "AI-Assisted Website Development" },
       role: { "zh-Hant": "個人實作專案", en: "Independent Practice Project" },
+      status: { "zh-Hant": "持續優化中", en: "Ongoing (continuously optimized)" },
       intro: {
         "zh-Hant": "雖然我本身是商管背景，但近期在 Claude Code 協作下，從零協助親戚公司建置官方網站，包含網站架構規劃、內容整理、介面調整、功能測試與上線前迭代。過程中持續透過 Prompt Engineering 快速生成 MVP，並反覆進行 debug 與優化，累積 AI 輔助開發的實作經驗。",
         en: "Although my academic background is in business and management, I recently worked with Claude Code to help build an official website for a relative’s company from scratch. The process included website structure planning, content organization, interface adjustment, testing, and iterative refinement before launch. Through this project, I gained hands-on experience in prompt engineering, rapid MVP generation, debugging, and AI-assisted execution."
@@ -243,6 +250,7 @@ const resumeData = {
     {
       title: { "zh-Hant": "信義書院永續專題競賽", en: "Sinyi School Sustainability Case Competition" },
       role: { "zh-Hant": "專案研究員｜2026/01 – 2026/06", en: "Researcher | Jan. 2026 – Jun. 2026" },
+      status: { "zh-Hant": "進行中", en: "In Progress" },
       intro: {
         "zh-Hant": "專案主題：服務業供應鏈淨零轉型與議合策略（Moving towards Net Zero with the Supply Chain）",
         en: "Topic: Moving towards Net Zero with the Supply Chain: Assessment and Engagement Strategies"
@@ -264,6 +272,13 @@ const resumeData = {
         en: [
           "Delivered a comprehensive English literature review and empirical report.",
           "Targeted submission to international academic conferences."
+        ]
+      },
+      plannedKpi: {
+        "zh-Hant": ["完成國際研討會投稿。", "建立可落地之供應鏈議合策略建議。"],
+        en: [
+          "Complete an international conference submission.",
+          "Deliver practical supplier engagement strategy recommendations."
         ]
       },
       tags: ["Net Zero", "Scope 3", "Research", "Sustainability"]
@@ -329,6 +344,15 @@ const resumeData = {
     { "zh-Hant": "PMA 專案助理證照（2024）", en: "PMA Project Management Assistant Certification (2024)" },
     { "zh-Hant": "ISO 14064-1（2023）", en: "ISO 14064-1 (2023)" },
     { "zh-Hant": "ACP InDesign 2020", en: "ACP InDesign 2020" }
+  ],
+
+  activities: [
+    { "zh-Hant": "慈濟大學國際親善大使", en: "Tzu Chi University International Goodwill Ambassador" },
+    {
+      "zh-Hant": "慈科大兒童劇幕前幕後支援",
+      en: "Tzu Chi University of Science and Technology Children's Theater Frontstage/Backstage Support"
+    },
+    { "zh-Hant": "永續活動參與", en: "Participation in sustainability-related activities" }
   ],
 
   skills: {
