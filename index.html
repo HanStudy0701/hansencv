@@ -7,16 +7,6 @@
       name="description"
       content="Teng Han Sen bilingual CV website - MBA, ESG, business analytics, and project collaboration"
     />
-    <meta property="og:title" content="TENG HAN SEN | MBA × ESG × Business Analysis × AI-Assisted Practice" />
-    <meta
-      property="og:description"
-      content="A bilingual personal resume website showcasing education, experience, projects, and AI-assisted practical work."
-    />
-    <meta property="og:image" content="assets/profile-photo.svg" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://example.github.io/hansencv/" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <title>Teng Han Sen | Bilingual CV Website</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +19,7 @@
   <body>
     <header class="site-header" id="top">
       <div class="container nav-wrap">
-        <a class="brand" href="#top">HS</a>
+        <a class="brand" href="#top">THS CV</a>
         <nav aria-label="Primary">
           <ul id="navList" class="nav-list"></ul>
         </nav>
@@ -41,12 +31,12 @@
       <section class="hero" id="hero">
         <div class="container hero-grid">
           <div class="hero-copy">
+            <p class="badge">Latest: 104</p>
             <h1><span id="nameZh"></span><small id="nameEn"></small></h1>
             <p id="heroTitle" class="hero-title"></p>
             <p id="heroIntro" class="hero-intro"></p>
-            <div id="heroContacts" class="hero-contacts"></div>
+            <div id="heroBadges" class="hero-badges"></div>
             <div id="quickLinks" class="quick-links"></div>
-            <div id="pdfButtonWrap" class="pdf-wrap"></div>
           </div>
           <div class="hero-photo-wrap">
             <img id="profilePhoto" class="hero-photo" alt="Profile photo" />
@@ -77,24 +67,10 @@
         </div>
       </section>
 
-      <section class="section" id="publications">
+      <section class="section" id="awards">
         <div class="container">
-          <h2 data-nav="publications"></h2>
-          <div id="publicationGroups" class="grid-cards"></div>
-        </div>
-      </section>
-
-      <section class="section" id="certifications">
-        <div class="container">
-          <h2 data-nav="certifications"></h2>
-          <ul id="certificationList" class="clean-list"></ul>
-        </div>
-      </section>
-
-      <section class="section" id="activities">
-        <div class="container">
-          <h2 data-nav="activities"></h2>
-          <ul id="activityList" class="clean-list"></ul>
+          <h2 data-nav="awards"></h2>
+          <ul id="awardList" class="clean-list"></ul>
         </div>
       </section>
 
@@ -109,7 +85,15 @@
         <div class="container">
           <h2 data-nav="evidence"></h2>
           <p class="section-subtitle" id="evidenceHint"></p>
+          <div class="evidence-tools">
+            <button id="downloadEvidenceTemplate" class="action-btn" type="button"></button>
+          </div>
           <div id="evidenceList" class="grid-cards"></div>
+          <div class="card checklist-card">
+            <h3 id="checklistTitle"></h3>
+            <p id="checklistHint" class="meta"></p>
+            <ul id="checklistItems" class="clean-list"></ul>
+          </div>
         </div>
       </section>
 
@@ -124,7 +108,6 @@
     <footer class="site-footer">
       <div class="container" id="footerText"></div>
     </footer>
-    <button id="backToTopBtn" class="back-to-top" type="button"></button>
 
     <script src="data.js"></script>
     <script src="script.js"></script>

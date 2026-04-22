@@ -11,15 +11,12 @@
   function langText(localizedValue) {
     if (!localizedValue) return "";
     if (typeof localizedValue === "string") return localizedValue;
-    return localizedValue[state.lang] || localizedValue["zh-Hant"] || localizedValue.en || "";
+    return localizedValue[state.lang] || localizedValue["zh-Hant"] || "";
   }
 
-  function applySiteMeta() {
-    const meta = resumeData.siteMeta || {};
-    document.querySelector('meta[property="og:title"]')?.setAttribute("content", meta.ogTitle || "");
-    document.querySelector('meta[property="og:description"]')?.setAttribute("content", meta.ogDescription || "");
-    document.querySelector('meta[property="og:image"]')?.setAttribute("content", meta.ogImage || "");
-    document.querySelector('meta[property="og:url"]')?.setAttribute("content", meta.ogUrl || "");
+  function sourceTag(source) {
+    const label = source === "104" ? t("labels.source104") : t("labels.sourceSupp");
+    return `<span class="chip">${label}</span>`;
   }
 
   function renderNav() {
@@ -40,21 +37,12 @@
     $("#nameEn").textContent = hero.nameEn;
     $("#heroTitle").textContent = hero.title;
     $("#heroIntro").textContent = hero.intro;
+    $("#heroBadges").innerHTML = hero.badges.map((item) => `<span>${item}</span>`).join("");
     $("#profilePhoto").src = resumeData.profilePhoto;
 
-    $("#heroContacts").innerHTML = `
-      ${(resumeData.contact.emails || [])
-        .map((email) => `<a href="mailto:${email}">${email}</a>`)
-        .join("")}
-      ${resumeData.contact.phone ? `<a href="tel:${resumeData.contact.phone}">${resumeData.contact.phone}</a>` : ""}
-    `;
-
-    $("#quickLinks").innerHTML = (hero.ctas || []).map((cta) => `<a href="#${cta.target}">${cta.label}</a>`).join("");
-
-    const wrap = $("#pdfButtonWrap");
-    wrap.innerHTML = resumeData.resumePdfPath
-      ? `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noopener noreferrer">${hero.downloadLabel}</a>`
-      : "";
+    $("#quickLinks").innerHTML = resumeData.quickLinks
+      .map((sectionId) => `<a href="#${sectionId}">${t(`nav.${sectionId}`)}</a>`)
+      .join("");
   }
 
   function renderAbout() {
@@ -67,149 +55,176 @@
         (item) => `
           <article class="card">
             <h3>${langText(item.school)}</h3>
-            ${item.degree ? `<p class="meta">${t("labels.degree")}: ${langText(item.degree)}</p>` : ""}
-            ${item.period ? `<p class="meta">${t("labels.period")}: ${langText(item.period)}</p>` : ""}
-            ${item.gpa ? `<p><span class="gpa-pill">${t("labels.gpa")}: ${item.gpa}</span></p>` : ""}
+            <p class="meta">${t("labels.period")}: ${item.period}</p>
+            ${sourceTag(item.source)}
           </article>`
       )
       .join("");
   }
 
   function renderExperience() {
-    const list = resumeData.experience || [];
-    if (!list.length) return ($("#experience").style.display = "none");
-    $("#experience").style.display = "";
-
-    $("#experienceList").innerHTML = list
+    $("#experienceList").innerHTML = resumeData.experience
       .map((item) => {
-        const bullets = (item.highlights?.[state.lang] || []).map((line) => `<li>${line}</li>`).join("");
+        const bullets = item.highlights[state.lang].map((line) => `<li>${line}</li>`).join("");
         return `
-          <article class="timeline-item card emphasis-card">
+          <article class="timeline-item card">
             <h3>${langText(item.organization)}</h3>
-            <p><strong>${t("labels.role")}:</strong> ${langText(item.role)} ｜ ${langText(item.period)}</p>
-            ${bullets ? `<ul>${bullets}</ul>` : ""}
+            <p><strong>${t("labels.role")}:</strong> ${langText(item.role)}</p>
+            <p class="meta"><strong>${t("labels.period")}:</strong> ${item.period}</p>
+            <ul>${bullets}</ul>
+            ${sourceTag(item.source)}
           </article>`;
       })
       .join("");
   }
 
   function renderProjects() {
-    const list = resumeData.projects || [];
-    if (!list.length) return ($("#projects").style.display = "none");
-    $("#projects").style.display = "";
-
-    $("#projectList").innerHTML = list
-      .map((project) => {
-        const responsibilities = (project.responsibilities?.[state.lang] || []).map((a) => `<li>${a}</li>`).join("");
-        const outcomes = (project.outcomes?.[state.lang] || []).map((o) => `<li>${o}</li>`).join("");
-        const tags = (project.tags || []).map((tag) => `<span class="chip">${tag}</span>`).join(" ");
-
-        return `
-          <article class="card ${project.featured ? "featured-project" : ""}">
+    $("#projectList").innerHTML = resumeData.projects
+      .map(
+        (project) => `
+          <article class="card">
             <h3>${langText(project.title)}</h3>
-            ${project.role ? `<p><strong>${t("labels.role")}:</strong> ${langText(project.role)}</p>` : ""}
-            ${project.status ? `<p class="meta"><strong>${t("labels.status")}:</strong> ${langText(project.status)}</p>` : ""}
-            ${project.intro ? `<p>${langText(project.intro)}</p>` : ""}
-            ${responsibilities ? `<p><strong>${t("labels.responsibilities")}</strong></p><ul>${responsibilities}</ul>` : ""}
-            ${outcomes ? `<p><strong>${t("labels.outcomes")}</strong></p><ul>${outcomes}</ul>` : ""}
-            ${(project.plannedKpi?.[state.lang] || []).length ? `<p><strong>${t("labels.kpi")}</strong></p><ul>${project.plannedKpi[state.lang].map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
-            ${tags ? `<div class="tag-row">${tags}</div>` : ""}
-            ${project.externalLink ? `<a class="project-link" href="${project.externalLink}" target="_blank" rel="noopener noreferrer">${t("labels.viewSite")}</a>` : ""}
-          </article>`;
+            <p>${langText(project.background)}</p>
+            <p><strong>${t("labels.role")}:</strong> ${langText(project.role)}</p>
+            <p><strong>What was done</strong></p>
+            <ul>${project.actions[state.lang].map((a) => `<li>${a}</li>`).join("")}</ul>
+            <p><strong>Outcomes</strong></p>
+            <ul>${project.outcomes[state.lang].map((o) => `<li>${o}</li>`).join("")}</ul>
+            <p class="meta">${langText(project.awardsOrFunding)}</p>
+            ${sourceTag(project.source)}
+          </article>`
+      )
+      .join("");
+  }
+
+  function renderAwards() {
+    $("#awardList").innerHTML = resumeData.awards
+      .map((award) => {
+        const yearLabel = award.year || (state.lang === "zh-Hant" ? "年份待補" : "Year TBD");
+        return `<li><span>${langText(award.title)}</span> <strong>${yearLabel}</strong> ${sourceTag(award.source)}</li>`;
       })
       .join("");
   }
 
-  function renderPublications() {
-    const groups = resumeData.awardsPublications || [];
-    if (!groups.length) return ($("#publications").style.display = "none");
-    $("#publications").style.display = "";
-
-    $("#publicationGroups").innerHTML = groups
-      .map(
-        (group) => `<article class="card">
-          <h3>${langText(group.category)}</h3>
-          <ul>${(group.items || []).map((item) => `<li>${langText(item)}</li>`).join("")}</ul>
-        </article>`
-      )
-      .join("");
-  }
-
-  function renderCertifications() {
-    const list = resumeData.certifications || [];
-    if (!list.length) return ($("#certifications").style.display = "none");
-    $("#certifications").style.display = "";
-
-    $("#certificationList").innerHTML = list.map((cert) => `<li><span>${langText(cert)}</span></li>`).join("");
-  }
-
-  function renderActivities() {
-    const list = resumeData.activities || [];
-    if (!list.length) return ($("#activities").style.display = "none");
-    $("#activities").style.display = "";
-    $("#activityList").innerHTML = list.map((item) => `<li><span>${langText(item)}</span></li>`).join("");
-  }
-
   function renderSkills() {
-    const skills = resumeData.skills || {};
-    $("#skillBlocks").innerHTML = `
+    const skillHtml = `
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "語言能力" : "Languages"}</h3>
-        ${(skills.languageGroup || []).map((item) => `<p>${state.lang === "zh-Hant" ? item.zh : item.en}</p>`).join("")}
+        <h3>${state.lang === "zh-Hant" ? "語言能力" : "Language Proficiency"}</h3>
+        ${resumeData.skills.languages.map((s) => `<span class="chip">${s}</span>`).join(" ")}
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "數位工具" : "Digital Tools"}</h3>
-        <div class="tag-row">${(skills.digitalTools || []).map((tool) => `<span class="chip">${tool}</span>`).join(" ")}</div>
+        <h3>${state.lang === "zh-Hant" ? "工具能力" : "Tools"}</h3>
+        ${resumeData.skills.tools.map((s) => `<span class="chip">${s}</span>`).join(" ")}
       </article>
       <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "AI 與網站實作" : "AI & Website Practice"}</h3>
-        <div class="tag-row">${(skills.aiWeb || []).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
-      </article>
-      <article class="card">
-        <h3>${state.lang === "zh-Hant" ? "核心能力" : "Core Capabilities"}</h3>
-        <div class="tag-row">${(skills.core || []).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
+        <h3>${state.lang === "zh-Hant" ? "商業／研究／專案能力" : "Business / Research / Project Capabilities"}</h3>
+        ${resumeData.skills.capabilities.map((c) => `<span class="chip">${langText(c)}</span>`).join(" ")}
+        <div style="margin-top:.8rem">${sourceTag(resumeData.skills.source)}</div>
       </article>`;
+
+    $("#skillBlocks").innerHTML = skillHtml;
   }
 
   function renderEvidence() {
-    const visibleItems = (resumeData.evidence || []).filter((item) => item.visible);
-    if (!visibleItems.length) return ($("#evidence").style.display = "none");
-    $("#evidence").style.display = "";
+    $("#evidenceHint").textContent = t("evidenceEmpty");
+    $("#downloadEvidenceTemplate").textContent = t("evidenceDownload");
+    const visibleItems = resumeData.evidence.filter((item) => item.visible);
 
-    $("#evidenceHint").textContent = t("evidenceTitle");
+    if (!visibleItems.length) {
+      $("#evidenceList").innerHTML = `<article class="card"><p>${t("evidenceEmpty")}</p></article>`;
+      return;
+    }
+
     $("#evidenceList").innerHTML = visibleItems
       .map(
         (item) => `<article class="card">
-          <p class="meta">${t("labels.type")}: ${langText(item.type)}</p>
+          <p class="meta">${item.date || "TBD"} · ${item.type}</p>
           <h3>${langText(item.title)}</h3>
-          ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>` : ""}
+          <p>${langText(item.description)}</p>
+          ${item.link ? `<a href="${item.link}" target="_blank" rel="noreferrer noopener">Open</a>` : ""}
         </article>`
       )
       .join("");
+  }
+
+  function collectMissingItems() {
+    const missing = [];
+    const push = (path, value) => {
+      if (typeof value === "string" && (value.trim() === "" || value.includes("TODO"))) {
+        missing.push(path);
+      }
+    };
+
+    push("contact.github", resumeData.contact.github);
+    push("contact.linkedin", resumeData.contact.linkedin);
+    push("profilePhoto (replace placeholder if needed)", resumeData.profilePhoto.includes("placeholder") ? "TODO" : "");
+
+    resumeData.projects.forEach((project, idx) => {
+      push(`projects[${idx}].awardsOrFunding.zh-Hant`, project.awardsOrFunding?.["zh-Hant"]);
+      push(`projects[${idx}].awardsOrFunding.en`, project.awardsOrFunding?.en);
+    });
+
+    resumeData.awards.forEach((award, idx) => {
+      push(`awards[${idx}].year`, award.year);
+    });
+
+    resumeData.evidence.forEach((item, idx) => {
+      push(`evidence[${idx}].date`, item.date);
+      push(`evidence[${idx}].link`, item.link);
+      push(`evidence[${idx}].title.zh-Hant`, item.title?.["zh-Hant"]);
+      push(`evidence[${idx}].title.en`, item.title?.en);
+    });
+
+    return missing;
+  }
+
+  function renderChecklist() {
+    $("#checklistTitle").textContent = t("checklistTitle");
+    $("#checklistHint").textContent = t("checklistHint");
+    const missing = collectMissingItems();
+    $("#checklistItems").innerHTML = missing.length
+      ? missing.map((field) => `<li><span>${field}</span><strong>TODO</strong></li>`).join("")
+      : `<li><span>${state.lang === "zh-Hant" ? "目前沒有待補欄位" : "No missing fields detected"}</span></li>`;
+  }
+
+  function setupEvidenceTemplateDownload() {
+    const button = $("#downloadEvidenceTemplate");
+    button.onclick = () => {
+      const template = {
+        date: "YYYY-MM-DD",
+        type: "news | evidence | award | activity",
+        title: { "zh-Hant": "標題", en: "Title" },
+        description: { "zh-Hant": "簡述", en: "Summary" },
+        link: "https://...",
+        visible: true
+      };
+      const blob = new Blob([JSON.stringify(template, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "evidence-template.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    };
   }
 
   function renderContact() {
     const contacts = [
-      ...((resumeData.contact.emails || []).map((email) => ["Email", email, `mailto:${email}`])),
-      [state.lang === "zh-Hant" ? "手機" : "Phone", resumeData.contact.phone, `tel:${resumeData.contact.phone}`]
-    ].filter((item) => item[1]);
+      ["Email", resumeData.contact.email, `mailto:${resumeData.contact.email}`],
+      [state.lang === "zh-Hant" ? "手機" : "Phone", resumeData.contact.phone, `tel:${resumeData.contact.phone}`],
+      [state.lang === "zh-Hant" ? "地區" : "Location", langText(resumeData.contact.location), ""],
+      ["GitHub", resumeData.contact.github || "TODO", resumeData.contact.github],
+      ["LinkedIn", resumeData.contact.linkedin || "TODO", resumeData.contact.linkedin]
+    ];
 
     $("#contactTitle").textContent = t("contactTitle");
     $("#contactList").innerHTML = contacts
-      .map(([label, value, href]) => `<article class="card"><h3>${label}</h3><a href="${href}">${value}</a></article>`)
+      .map(([label, value, href]) => {
+        if (!href) {
+          return `<article class="card"><h3>${label}</h3><p>${value}</p></article>`;
+        }
+        return `<article class="card"><h3>${label}</h3><a href="${href}">${value}</a></article>`;
+      })
       .join("");
-  }
-
-  function setupBackToTop() {
-    const btn = $("#backToTopBtn");
-    btn.textContent = t("hero.backToTop");
-    const toggle = () => {
-      const show = window.scrollY > 420 || window.innerHeight + window.scrollY > document.body.offsetHeight - 240;
-      btn.classList.toggle("visible", show);
-    };
-    window.addEventListener("scroll", toggle, { passive: true });
-    toggle();
-    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function applyLanguageAttrs() {
@@ -218,39 +233,41 @@
     $("#footerText").textContent = t("footer");
   }
 
+  function renderAll() {
+    renderNav();
+    renderHero();
+    renderAbout();
+    renderExperience();
+    renderProjects();
+    renderAwards();
+    renderSkills();
+    renderEvidence();
+    renderChecklist();
+    renderContact();
+    applyLanguageAttrs();
+    bindActiveSectionObserver();
+    setupEvidenceTemplateDownload();
+  }
+
   function bindActiveSectionObserver() {
     const links = Array.from(document.querySelectorAll("#navList a"));
-    const sections = links.map((link) => document.getElementById(link.dataset.target)).filter(Boolean);
+    const sections = links
+      .map((link) => document.getElementById(link.dataset.target))
+      .filter(Boolean);
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          links.forEach((link) => link.classList.toggle("active", link.dataset.target === entry.target.id));
+          links.forEach((link) => {
+            link.classList.toggle("active", link.dataset.target === entry.target.id);
+          });
         });
       },
       { rootMargin: "-35% 0px -55% 0px", threshold: 0.2 }
     );
 
     sections.forEach((section) => observer.observe(section));
-  }
-
-  function renderAll() {
-    applySiteMeta();
-    renderNav();
-    renderHero();
-    renderAbout();
-    renderExperience();
-    renderProjects();
-    renderPublications();
-    renderCertifications();
-    renderActivities();
-    renderSkills();
-    renderEvidence();
-    renderContact();
-    applyLanguageAttrs();
-    bindActiveSectionObserver();
-    setupBackToTop();
   }
 
   $("#langToggle").addEventListener("click", () => {

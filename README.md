@@ -7,14 +7,14 @@ Bilingual (Traditional Chinese / English) resume website for GitHub Pages.
 - `index.html`: site layout and section anchors
 - `styles.css`: responsive, professional visual design
 - `script.js`: rendering, language toggle, smooth navigation behavior
-- `data.js`: maintainable content source
-- `assets/`: images (replace `profile.jpg` with your real profile photo)
-- `assets/favicon.svg`: fallback favicon using initials
+- `data.js`: maintainable content source (104-first policy)
+- `assets/`: images (replace `profile-placeholder.svg` with real profile photo)
+- Evidence section includes:
+  - auto-generated missing-content checklist (TODO/empty field detection)
+  - downloadable `evidence-template.json`
 
 ## Update workflow
 
-1. Edit `data.js` only for new experience, awards, projects, skills, and evidence/news.
-2. For project external buttons, add `externalLink` only when a real URL exists.
-3. To enable PDF button, set `resumePdfPath` to a valid file path (for example `assets/resume.pdf`).
-4. Update `siteMeta.ogUrl` and `siteMeta.ogImage` before production deploy.
-5. Commit and deploy to GitHub Pages (branch root).
+1. Edit `data.js` only for new experience, awards, and evidence/news.
+2. For evidence/news, add entries in `evidence[]` and set `visible: true`.
+3. Commit and deploy to GitHub Pages (branch root).
