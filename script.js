@@ -231,6 +231,8 @@
     const title = $("#downloadTitle");
     const hint = $("#downloadHint");
     const actions = $("#downloadActions");
+    if (!title || !hint || !actions) return;
+
     const hasPdf = Boolean(resumeData.resumePdfPath);
 
     title.textContent = t("download.title");
