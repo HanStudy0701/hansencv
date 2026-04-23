@@ -1,6 +1,5 @@
-/* global resumeData */
-
 (() => {
+  const resumeData = globalThis.resumeData || {};
   const state = { lang: resumeData.defaultLang || "zh-Hant" };
   const $ = (selector) => document.querySelector(selector);
 
@@ -27,13 +26,21 @@
     const requiredTopLevelKeys = ["i18n", "contact", "education", "navOrder"];
     const missingKeys = requiredTopLevelKeys.filter((key) => !(key in resumeData));
 
-    if (missingKeys.length) {
-      throw new Error(`resumeData 缺少必要欄位: ${missingKeys.join(", ")}`);
+    if (missingKeys.length) console.warn("resumeData 缺少欄位:", missingKeys.join(", "));
+
+    if (!resumeData.i18n || typeof resumeData.i18n !== "object") {
+      resumeData.i18n = { "zh-Hant": {}, en: {} };
     }
 
-    if (!resumeData.i18n?.[state.lang]) {
-      throw new Error(`找不到語系資料: ${state.lang}`);
+    if (!resumeData.i18n[state.lang]) {
+      const fallbackLang = Object.keys(resumeData.i18n)[0] || "zh-Hant";
+      state.lang = fallbackLang;
+      console.warn(`找不到語系 ${resumeData.defaultLang || "zh-Hant"}，已改用 ${fallbackLang}`);
     }
+
+    if (!Array.isArray(resumeData.navOrder)) resumeData.navOrder = [];
+    if (!Array.isArray(resumeData.education)) resumeData.education = [];
+    if (!resumeData.contact || typeof resumeData.contact !== "object") resumeData.contact = {};
   }
   function t(path) {
     return path.split(".").reduce((acc, key) => acc?.[key], resumeData.i18n[state.lang]);
@@ -66,7 +73,7 @@
   }
 
   function renderHero() {
-    const hero = t("hero");
+    const hero = t("hero") || {};
     $("#nameZh").textContent = hero.nameZh;
     $("#nameEn").textContent = hero.nameEn;
     $("#heroTitle").textContent = hero.title;
@@ -322,11 +329,11 @@
     renderAll();
   });
 
+  validateResumeDataShape();
   try {
-    validateResumeDataShape();
     renderAll();
   } catch (error) {
     console.error("Resume rendering failed:", error);
-    showDataError("內容載入失敗：請檢查 data.js 格式或欄位是否完整。");
+    showDataError("內容顯示異常：已套用安全模式，請重新整理後再試。");
   }
 })();
