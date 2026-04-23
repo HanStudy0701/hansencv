@@ -75,6 +75,22 @@ h1 small { display: block; margin-top: .4rem; font-size: .55em; letter-spacing: 
 .skills-layout { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .contact-grid { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .contact-grid a { color: var(--accent); text-decoration: none; overflow-wrap: anywhere; }
+.section-download { padding-top: .5rem; }
+.download-actions { display: grid; gap: .8rem; justify-items: start; }
+.pdf-top-notice {
+  display: none;
+  align-items: center;
+  gap: .45rem;
+  flex-wrap: wrap;
+  background: #fff9df;
+  border: 1px solid #f1de94;
+  color: #5a4a14;
+  padding: .55rem .75rem;
+  border-radius: 10px;
+  font-size: .92rem;
+}
+.pdf-top-notice.visible { display: flex; }
+.pdf-top-notice a { color: #2a4d9b; font-weight: 700; text-decoration: none; }
 .site-footer { border-top: 1px solid var(--line); padding: 1.2rem 0; color: var(--muted); font-size: .9rem; }
 
 .back-to-top {

@@ -16,6 +16,13 @@
     banner.textContent = message;
   }
 
+  function showPdfNotice() {
+    const notice = document.getElementById("pdfTopNotice");
+    if (!notice) return;
+    notice.classList.add("visible");
+    window.setTimeout(() => notice.classList.remove("visible"), 7000);
+  }
+
   function validateResumeDataShape() {
     const requiredTopLevelKeys = ["i18n", "contact", "education", "navOrder"];
     const missingKeys = requiredTopLevelKeys.filter((key) => !(key in resumeData));
@@ -75,10 +82,6 @@
 
     $("#quickLinks").innerHTML = (hero.ctas || []).map((cta) => `<a href="#${cta.target}">${cta.label}</a>`).join("");
 
-    const wrap = $("#pdfButtonWrap");
-    wrap.innerHTML = resumeData.resumePdfPath
-      ? `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noopener noreferrer">${hero.downloadLabel}</a>`
-      : "";
   }
 
   function renderAbout() {
@@ -224,6 +227,40 @@
       .join("");
   }
 
+  function renderDownloadSection() {
+    const title = $("#downloadTitle");
+    const hint = $("#downloadHint");
+    const actions = $("#downloadActions");
+    const hasPdf = Boolean(resumeData.resumePdfPath);
+
+    title.textContent = t("download.title");
+    hint.textContent = t("download.hint");
+
+    actions.innerHTML = hasPdf
+      ? `
+      <a class="project-link js-pdf-link" href="${resumeData.resumePdfPath}" target="_blank" rel="noopener noreferrer">
+        ${t("download.downloadPdf")}
+      </a>
+      <div id="pdfTopNotice" class="pdf-top-notice">
+        <span>${t("download.noticeText")}</span>
+        <a href="${resumeData.siteMeta?.ogUrl || "#top"}" target="_blank" rel="noopener noreferrer">${t("download.noticeLink")}</a>
+      </div>`
+      : `<button id="printPdfBtn" class="project-link" type="button">${t("download.printFallback")}</button>`;
+
+    if (hasPdf) {
+      document.querySelectorAll(".js-pdf-link").forEach((link) => {
+        link.addEventListener("click", showPdfNotice);
+      });
+      return;
+    }
+
+    const printBtn = $("#printPdfBtn");
+    if (!printBtn) return;
+    printBtn.onclick = () => {
+      window.print();
+    };
+  }
+
   function setupBackToTop() {
     const btn = $("#backToTopBtn");
     btn.textContent = t("hero.backToTop");
@@ -272,6 +309,7 @@
     renderSkills();
     renderEvidence();
     renderContact();
+    renderDownloadSection();
     applyLanguageAttrs();
     bindActiveSectionObserver();
     setupBackToTop();

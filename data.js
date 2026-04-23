@@ -58,6 +58,14 @@ const resumeData = {
       },
       evidenceTitle: "相關專案成果、活動紀錄與補充資料將持續更新。",
       contactTitle: "聯絡方式",
+      download: {
+        title: "PDF 下載",
+        hint: "下載履歷 PDF 後，若畫面不清楚可使用上方提示連結回到這個網頁版本。",
+        downloadPdf: "下載 PDF 檔案",
+        noticeText: "如果 PDF 看不清楚，可以點擊：",
+        noticeLink: "回到網頁版履歷",
+        printFallback: "直接列印 / 另存成 PDF"
+      },
       footer: "© 2026 Teng Han Sen · Personal Profile Website"
     },
     en: {
@@ -107,6 +115,14 @@ const resumeData = {
       },
       evidenceTitle: "Additional project evidence, activity records, and supporting materials will be updated over time.",
       contactTitle: "Contact",
+      download: {
+        title: "PDF Download",
+        hint: "After opening the PDF, use the top hint link to return to this web version if the PDF is unclear.",
+        downloadPdf: "Download PDF",
+        noticeText: "If the PDF is unclear, click:",
+        noticeLink: "Back to the web profile",
+        printFallback: "Print / Save this page as PDF"
+      },
       footer: "© 2026 Teng Han Sen · Personal Profile Website"
     }
   },
