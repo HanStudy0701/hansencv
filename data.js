@@ -1,4 +1,4 @@
-const resumeData = {
+var resumeData = {
   profilePhoto: "assets/profile.jpg",
   siteMeta: {
     ogTitle: "TENG HAN SEN | MBA × ESG × Business Analysis × AI-Assisted Practice",

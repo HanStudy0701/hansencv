@@ -49,6 +49,10 @@
     if (!Array.isArray(resumeData.education)) resumeData.education = [];
     if (!resumeData.contact || typeof resumeData.contact !== "object") resumeData.contact = {};
   }
+
+  function hasRenderableData() {
+    return Boolean(resumeData && resumeData.i18n && Object.keys(resumeData.i18n).length);
+  }
   function t(path) {
     return path.split(".").reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), resumeData.i18n[state.lang]);
   }
@@ -367,6 +371,12 @@
         state.lang = state.lang === "zh-Hant" ? "en" : "zh-Hant";
         renderAll();
       });
+    }
+
+    if (!hasRenderableData()) {
+      showDataError("內容尚未載入成功，請重新整理；若仍無顯示，請清除快取後再試。");
+      console.error("resumeData missing or empty:", resumeData);
+      return;
     }
 
     validateResumeDataShape();
