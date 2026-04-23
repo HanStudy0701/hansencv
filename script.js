@@ -1,5 +1,6 @@
 (() => {
-  const resumeData = globalThis.resumeData || {};
+  const rootScope = typeof globalThis !== "undefined" ? globalThis : window;
+  const resumeData = rootScope.resumeData || {};
   const state = { lang: resumeData.defaultLang || "zh-Hant" };
   const $ = (selector) => document.querySelector(selector);
 
@@ -43,7 +44,7 @@
     if (!resumeData.contact || typeof resumeData.contact !== "object") resumeData.contact = {};
   }
   function t(path) {
-    return path.split(".").reduce((acc, key) => acc?.[key], resumeData.i18n[state.lang]);
+    return path.split(".").reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), resumeData.i18n[state.lang]);
   }
 
   function langText(localizedValue) {
@@ -54,10 +55,14 @@
 
   function applySiteMeta() {
     const meta = resumeData.siteMeta || {};
-    document.querySelector('meta[property="og:title"]')?.setAttribute("content", meta.ogTitle || "");
-    document.querySelector('meta[property="og:description"]')?.setAttribute("content", meta.ogDescription || "");
-    document.querySelector('meta[property="og:image"]')?.setAttribute("content", meta.ogImage || "");
-    document.querySelector('meta[property="og:url"]')?.setAttribute("content", meta.ogUrl || "");
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogTitle) ogTitle.setAttribute("content", meta.ogTitle || "");
+    if (ogDescription) ogDescription.setAttribute("content", meta.ogDescription || "");
+    if (ogImage) ogImage.setAttribute("content", meta.ogImage || "");
+    if (ogUrl) ogUrl.setAttribute("content", meta.ogUrl || "");
   }
 
   function renderNav() {
@@ -252,7 +257,7 @@
       </a>
       <div id="pdfTopNotice" class="pdf-top-notice">
         <span>${t("download.noticeText")}</span>
-        <a href="${resumeData.siteMeta?.ogUrl || "#top"}" target="_blank" rel="noopener noreferrer">${t("download.noticeLink")}</a>
+        <a href="${(resumeData.siteMeta && resumeData.siteMeta.ogUrl) || "#top"}" target="_blank" rel="noopener noreferrer">${t("download.noticeLink")}</a>
       </div>`
       : `<button id="printPdfBtn" class="project-link" type="button">${t("download.printFallback")}</button>`;
 
@@ -291,6 +296,7 @@
   function bindActiveSectionObserver() {
     const links = Array.from(document.querySelectorAll("#navList a"));
     const sections = links.map((link) => document.getElementById(link.dataset.target)).filter(Boolean);
+    if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
