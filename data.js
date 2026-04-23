@@ -398,3 +398,7 @@ const resumeData = {
     }
   ]
 };
+
+if (typeof globalThis !== "undefined") {
+  globalThis.resumeData = resumeData;
+}

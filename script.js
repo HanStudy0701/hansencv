@@ -3,6 +3,12 @@
   const resumeData = rootScope.resumeData || {};
   const state = { lang: resumeData.defaultLang || "zh-Hant" };
   const $ = (selector) => document.querySelector(selector);
+  const ensureArray = (value) => (Array.isArray(value) ? value : []);
+  const setText = (selector, value) => {
+    const node = $(selector);
+    if (!node) return;
+    node.textContent = value ?? "";
+  };
 
 
   function showDataError(message) {
@@ -67,6 +73,7 @@
 
   function renderNav() {
     const navList = $("#navList");
+    if (!navList) return;
     navList.innerHTML = resumeData.navOrder
       .map((id) => `<li><a href="#${id}" data-target="${id}">${t(`nav.${id}`)}</a></li>`)
       .join("");
@@ -79,29 +86,39 @@
 
   function renderHero() {
     const hero = t("hero") || {};
-    $("#nameZh").textContent = hero.nameZh;
-    $("#nameEn").textContent = hero.nameEn;
-    $("#heroTitle").textContent = hero.title;
-    $("#heroIntro").textContent = hero.intro;
-    $("#profilePhoto").src = resumeData.profilePhoto;
+    setText("#nameZh", hero.nameZh);
+    setText("#nameEn", hero.nameEn);
+    setText("#heroTitle", hero.title);
+    setText("#heroIntro", hero.intro);
 
-    $("#heroContacts").innerHTML = `
-      ${(resumeData.contact.emails || [])
+    const profilePhoto = $("#profilePhoto");
+    if (profilePhoto) profilePhoto.src = resumeData.profilePhoto || "";
+
+    const heroContacts = $("#heroContacts");
+    if (heroContacts) {
+      heroContacts.innerHTML = `
+      ${ensureArray(resumeData.contact.emails)
         .map((email) => `<a href="mailto:${email}">${email}</a>`)
         .join("")}
       ${resumeData.contact.phone ? `<a href="tel:${resumeData.contact.phone}">${resumeData.contact.phone}</a>` : ""}
     `;
+    }
 
-    $("#quickLinks").innerHTML = (hero.ctas || []).map((cta) => `<a href="#${cta.target}">${cta.label}</a>`).join("");
+    const quickLinks = $("#quickLinks");
+    if (quickLinks) {
+      quickLinks.innerHTML = ensureArray(hero.ctas).map((cta) => `<a href="#${cta.target}">${cta.label}</a>`).join("");
+    }
 
   }
 
   function renderAbout() {
-    $("#aboutTitle").textContent = t("about.heading");
-    $("#aboutSubtitle").textContent = t("sectionSubtitle");
-    $("#aboutSummary").textContent = t("about.summary");
+    setText("#aboutTitle", t("about.heading"));
+    setText("#aboutSubtitle", t("sectionSubtitle"));
+    setText("#aboutSummary", t("about.summary"));
 
-    $("#educationList").innerHTML = resumeData.education
+    const educationList = $("#educationList");
+    if (!educationList) return;
+    educationList.innerHTML = ensureArray(resumeData.education)
       .map(
         (item) => `
           <article class="card">
@@ -115,7 +132,7 @@
   }
 
   function renderExperience() {
-    const list = resumeData.experience || [];
+    const list = ensureArray(resumeData.experience);
     if (!list.length) return ($("#experience").style.display = "none");
     $("#experience").style.display = "";
 
@@ -133,7 +150,7 @@
   }
 
   function renderProjects() {
-    const list = resumeData.projects || [];
+    const list = ensureArray(resumeData.projects);
     if (!list.length) return ($("#projects").style.display = "none");
     $("#projects").style.display = "";
 
@@ -151,7 +168,7 @@
             ${project.intro ? `<p>${langText(project.intro)}</p>` : ""}
             ${responsibilities ? `<p><strong>${t("labels.responsibilities")}</strong></p><ul>${responsibilities}</ul>` : ""}
             ${outcomes ? `<p><strong>${t("labels.outcomes")}</strong></p><ul>${outcomes}</ul>` : ""}
-            ${(project.plannedKpi?.[state.lang] || []).length ? `<p><strong>${t("labels.kpi")}</strong></p><ul>${project.plannedKpi[state.lang].map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
+            ${ensureArray(project.plannedKpi?.[state.lang]).length ? `<p><strong>${t("labels.kpi")}</strong></p><ul>${ensureArray(project.plannedKpi?.[state.lang]).map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
             ${tags ? `<div class="tag-row">${tags}</div>` : ""}
             ${project.externalLink ? `<a class="project-link" href="${project.externalLink}" target="_blank" rel="noopener noreferrer">${t("labels.viewSite")}</a>` : ""}
           </article>`;
@@ -160,7 +177,7 @@
   }
 
   function renderPublications() {
-    const groups = resumeData.awardsPublications || [];
+    const groups = ensureArray(resumeData.awardsPublications);
     if (!groups.length) return ($("#publications").style.display = "none");
     $("#publications").style.display = "";
 
@@ -168,14 +185,14 @@
       .map(
         (group) => `<article class="card">
           <h3>${langText(group.category)}</h3>
-          <ul>${(group.items || []).map((item) => `<li>${langText(item)}</li>`).join("")}</ul>
+          <ul>${ensureArray(group.items).map((item) => `<li>${langText(item)}</li>`).join("")}</ul>
         </article>`
       )
       .join("");
   }
 
   function renderCertifications() {
-    const list = resumeData.certifications || [];
+    const list = ensureArray(resumeData.certifications);
     if (!list.length) return ($("#certifications").style.display = "none");
     $("#certifications").style.display = "";
 
@@ -183,7 +200,7 @@
   }
 
   function renderActivities() {
-    const list = resumeData.activities || [];
+    const list = ensureArray(resumeData.activities);
     if (!list.length) return ($("#activities").style.display = "none");
     $("#activities").style.display = "";
     $("#activityList").innerHTML = list.map((item) => `<li><span>${langText(item)}</span></li>`).join("");
@@ -191,31 +208,33 @@
 
   function renderSkills() {
     const skills = resumeData.skills || {};
-    $("#skillBlocks").innerHTML = `
+    const skillBlocks = $("#skillBlocks");
+    if (!skillBlocks) return;
+    skillBlocks.innerHTML = `
       <article class="card">
         <h3>${state.lang === "zh-Hant" ? "語言能力" : "Languages"}</h3>
-        ${(skills.languageGroup || []).map((item) => `<p>${state.lang === "zh-Hant" ? item.zh : item.en}</p>`).join("")}
+        ${ensureArray(skills.languageGroup).map((item) => `<p>${state.lang === "zh-Hant" ? item.zh : item.en}</p>`).join("")}
       </article>
       <article class="card">
         <h3>${state.lang === "zh-Hant" ? "數位工具" : "Digital Tools"}</h3>
-        <div class="tag-row">${(skills.digitalTools || []).map((tool) => `<span class="chip">${tool}</span>`).join(" ")}</div>
+        <div class="tag-row">${ensureArray(skills.digitalTools).map((tool) => `<span class="chip">${tool}</span>`).join(" ")}</div>
       </article>
       <article class="card">
         <h3>${state.lang === "zh-Hant" ? "AI 與網站實作" : "AI & Website Practice"}</h3>
-        <div class="tag-row">${(skills.aiWeb || []).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
+        <div class="tag-row">${ensureArray(skills.aiWeb).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
       </article>
       <article class="card">
         <h3>${state.lang === "zh-Hant" ? "核心能力" : "Core Capabilities"}</h3>
-        <div class="tag-row">${(skills.core || []).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
+        <div class="tag-row">${ensureArray(skills.core).map((item) => `<span class="chip">${langText(item)}</span>`).join(" ")}</div>
       </article>`;
   }
 
   function renderEvidence() {
-    const visibleItems = (resumeData.evidence || []).filter((item) => item.visible);
+    const visibleItems = ensureArray(resumeData.evidence).filter((item) => item.visible);
     if (!visibleItems.length) return ($("#evidence").style.display = "none");
     $("#evidence").style.display = "";
 
-    $("#evidenceHint").textContent = t("evidenceTitle");
+    setText("#evidenceHint", t("evidenceTitle"));
     $("#evidenceList").innerHTML = visibleItems
       .map(
         (item) => `<article class="card">
@@ -229,12 +248,14 @@
 
   function renderContact() {
     const contacts = [
-      ...((resumeData.contact.emails || []).map((email) => ["Email", email, `mailto:${email}`])),
+      ...(ensureArray(resumeData.contact.emails).map((email) => ["Email", email, `mailto:${email}`])),
       [state.lang === "zh-Hant" ? "手機" : "Phone", resumeData.contact.phone, `tel:${resumeData.contact.phone}`]
     ].filter((item) => item[1]);
 
-    $("#contactTitle").textContent = t("contactTitle");
-    $("#contactList").innerHTML = contacts
+    setText("#contactTitle", t("contactTitle"));
+    const contactList = $("#contactList");
+    if (!contactList) return;
+    contactList.innerHTML = contacts
       .map(([label, value, href]) => `<article class="card"><h3>${label}</h3><a href="${href}">${value}</a></article>`)
       .join("");
   }
@@ -289,8 +310,8 @@
 
   function applyLanguageAttrs() {
     document.documentElement.lang = state.lang;
-    $("#langToggle").textContent = state.lang === "zh-Hant" ? "EN" : "中";
-    $("#footerText").textContent = t("footer");
+    setText("#langToggle", state.lang === "zh-Hant" ? "EN" : "中");
+    setText("#footerText", t("footer"));
   }
 
   function bindActiveSectionObserver() {
@@ -312,34 +333,54 @@
   }
 
   function renderAll() {
-    applySiteMeta();
-    renderNav();
-    renderHero();
-    renderAbout();
-    renderExperience();
-    renderProjects();
-    renderPublications();
-    renderCertifications();
-    renderActivities();
-    renderSkills();
-    renderEvidence();
-    renderContact();
-    renderDownloadSection();
-    applyLanguageAttrs();
-    bindActiveSectionObserver();
-    setupBackToTop();
+    const renderSteps = [
+      ["meta", applySiteMeta],
+      ["nav", renderNav],
+      ["hero", renderHero],
+      ["about", renderAbout],
+      ["experience", renderExperience],
+      ["projects", renderProjects],
+      ["publications", renderPublications],
+      ["certifications", renderCertifications],
+      ["activities", renderActivities],
+      ["skills", renderSkills],
+      ["evidence", renderEvidence],
+      ["contact", renderContact],
+      ["download", renderDownloadSection],
+      ["lang", applyLanguageAttrs],
+      ["activeSectionObserver", bindActiveSectionObserver],
+      ["backToTop", setupBackToTop]
+    ];
+    renderSteps.forEach(([stepName, stepFn]) => {
+      try {
+        stepFn();
+      } catch (error) {
+        console.error(`Render step failed: ${stepName}`, error);
+      }
+    });
   }
 
-  $("#langToggle").addEventListener("click", () => {
-    state.lang = state.lang === "zh-Hant" ? "en" : "zh-Hant";
-    renderAll();
-  });
+  function boot() {
+    const langToggle = $("#langToggle");
+    if (langToggle) {
+      langToggle.addEventListener("click", () => {
+        state.lang = state.lang === "zh-Hant" ? "en" : "zh-Hant";
+        renderAll();
+      });
+    }
 
-  validateResumeDataShape();
-  try {
-    renderAll();
-  } catch (error) {
-    console.error("Resume rendering failed:", error);
-    showDataError("內容顯示異常：已套用安全模式，請重新整理後再試。");
+    validateResumeDataShape();
+    try {
+      renderAll();
+    } catch (error) {
+      console.error("Resume rendering failed:", error);
+      showDataError("內容顯示異常：已套用安全模式，請重新整理後再試。");
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, { once: true });
+  } else {
+    boot();
   }
 })();
