@@ -1,9 +1,47 @@
-/* global resumeData */
-
 (() => {
+  const resumeData = globalThis.resumeData || {};
   const state = { lang: resumeData.defaultLang || "zh-Hant" };
   const $ = (selector) => document.querySelector(selector);
 
+
+  function showDataError(message) {
+    let banner = document.getElementById("dataErrorBanner");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "dataErrorBanner";
+      banner.className = "data-error-banner";
+      document.body.prepend(banner);
+    }
+    banner.textContent = message;
+  }
+
+  function showPdfNotice() {
+    const notice = document.getElementById("pdfTopNotice");
+    if (!notice) return;
+    notice.classList.add("visible");
+    window.setTimeout(() => notice.classList.remove("visible"), 7000);
+  }
+
+  function validateResumeDataShape() {
+    const requiredTopLevelKeys = ["i18n", "contact", "education", "navOrder"];
+    const missingKeys = requiredTopLevelKeys.filter((key) => !(key in resumeData));
+
+    if (missingKeys.length) console.warn("resumeData 缺少欄位:", missingKeys.join(", "));
+
+    if (!resumeData.i18n || typeof resumeData.i18n !== "object") {
+      resumeData.i18n = { "zh-Hant": {}, en: {} };
+    }
+
+    if (!resumeData.i18n[state.lang]) {
+      const fallbackLang = Object.keys(resumeData.i18n)[0] || "zh-Hant";
+      state.lang = fallbackLang;
+      console.warn(`找不到語系 ${resumeData.defaultLang || "zh-Hant"}，已改用 ${fallbackLang}`);
+    }
+
+    if (!Array.isArray(resumeData.navOrder)) resumeData.navOrder = [];
+    if (!Array.isArray(resumeData.education)) resumeData.education = [];
+    if (!resumeData.contact || typeof resumeData.contact !== "object") resumeData.contact = {};
+  }
   function t(path) {
     return path.split(".").reduce((acc, key) => acc?.[key], resumeData.i18n[state.lang]);
   }
@@ -35,7 +73,7 @@
   }
 
   function renderHero() {
-    const hero = t("hero");
+    const hero = t("hero") || {};
     $("#nameZh").textContent = hero.nameZh;
     $("#nameEn").textContent = hero.nameEn;
     $("#heroTitle").textContent = hero.title;
@@ -51,10 +89,6 @@
 
     $("#quickLinks").innerHTML = (hero.ctas || []).map((cta) => `<a href="#${cta.target}">${cta.label}</a>`).join("");
 
-    const wrap = $("#pdfButtonWrap");
-    wrap.innerHTML = resumeData.resumePdfPath
-      ? `<a class="pdf-btn" href="${resumeData.resumePdfPath}" target="_blank" rel="noopener noreferrer">${hero.downloadLabel}</a>`
-      : "";
   }
 
   function renderAbout() {
@@ -200,6 +234,42 @@
       .join("");
   }
 
+  function renderDownloadSection() {
+    const title = $("#downloadTitle");
+    const hint = $("#downloadHint");
+    const actions = $("#downloadActions");
+    if (!title || !hint || !actions) return;
+
+    const hasPdf = Boolean(resumeData.resumePdfPath);
+
+    title.textContent = t("download.title");
+    hint.textContent = t("download.hint");
+
+    actions.innerHTML = hasPdf
+      ? `
+      <a class="project-link js-pdf-link" href="${resumeData.resumePdfPath}" target="_blank" rel="noopener noreferrer">
+        ${t("download.downloadPdf")}
+      </a>
+      <div id="pdfTopNotice" class="pdf-top-notice">
+        <span>${t("download.noticeText")}</span>
+        <a href="${resumeData.siteMeta?.ogUrl || "#top"}" target="_blank" rel="noopener noreferrer">${t("download.noticeLink")}</a>
+      </div>`
+      : `<button id="printPdfBtn" class="project-link" type="button">${t("download.printFallback")}</button>`;
+
+    if (hasPdf) {
+      document.querySelectorAll(".js-pdf-link").forEach((link) => {
+        link.addEventListener("click", showPdfNotice);
+      });
+      return;
+    }
+
+    const printBtn = $("#printPdfBtn");
+    if (!printBtn) return;
+    printBtn.onclick = () => {
+      window.print();
+    };
+  }
+
   function setupBackToTop() {
     const btn = $("#backToTopBtn");
     btn.textContent = t("hero.backToTop");
@@ -248,6 +318,7 @@
     renderSkills();
     renderEvidence();
     renderContact();
+    renderDownloadSection();
     applyLanguageAttrs();
     bindActiveSectionObserver();
     setupBackToTop();
@@ -258,5 +329,11 @@
     renderAll();
   });
 
-  renderAll();
+  validateResumeDataShape();
+  try {
+    renderAll();
+  } catch (error) {
+    console.error("Resume rendering failed:", error);
+    showDataError("內容顯示異常：已套用安全模式，請重新整理後再試。");
+  }
 })();
