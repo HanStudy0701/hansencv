@@ -140,7 +140,7 @@ var resumeData = {
       },
       degree: { "zh-Hant": "碩士", en: "Master’s" },
       period: { "zh-Hant": "2025/08 – 至今", en: "Aug. 2025 – Present" },
-      gpa: "114-1 GPA 3.93 / 4.3"
+      gpa: "114-1年 GPA 3.93/4.3"
     },
     {
       school: { "zh-Hant": "慈濟大學 經營管理學系", en: "Tzu Chi University, Bachelor of Business Administration" },
