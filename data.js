@@ -139,7 +139,8 @@ var resumeData = {
         en: "National Chengchi University, Master of Business Administration (MBA)"
       },
       degree: { "zh-Hant": "碩士", en: "Master’s" },
-      period: { "zh-Hant": "2025/08 – 至今", en: "Aug. 2025 – Present" }
+      period: { "zh-Hant": "2025/08 – 至今", en: "Aug. 2025 – Present" },
+      gpa: "114-1 GPA 3.93 / 4.3"
     },
     {
       school: { "zh-Hant": "慈濟大學 經營管理學系", en: "Tzu Chi University, Bachelor of Business Administration" },
@@ -179,12 +180,12 @@ var resumeData = {
       period: { "zh-Hant": "2024/07 – 2025/06", en: "Jul. 2024 – Jun. 2025" },
       highlights: {
         "zh-Hant": [
-          "專案進度精準管控：擔任跨部門溝通樞紐，負責追蹤專案關鍵里程碑（Milestones）與協調任務進度，確保各階段專案流程穩定推進並達成 100% 準時交付。",
+          "專案進度精準管控：擔任跨部門溝通樞紐，負責追蹤專案關鍵里程碑（Milestones），各項進度皆超前推進。",
           "數據自動化與效率提升：運用 AI 輔助開發 Excel VBA 自動化腳本，將原始營運數據自動化清洗並轉化為分析報表，成功降低 50% 以上的重複性行政勞務時間。",
           "用戶數據洞察與分析：執行用戶後台數據採集與資料加工，將複雜的營運資訊轉化為直觀的視覺化分析報告，提供主管作為優化服務流程之重要決策參考。"
         ],
         en: [
-          "Project milestone control: served as a cross-functional coordination hub, tracking key milestones and task progress to ensure stable project execution and 100% on-time delivery.",
+          "Project milestone control: served as a cross-functional coordination hub, tracking key milestones, with overall execution consistently ahead of schedule.",
           "Data automation and efficiency improvement: used AI-assisted Excel VBA scripting to clean and transform raw operational data into analysis reports, reducing repetitive administrative workload by over 50%.",
           "User data insight and analysis: handled backend data collection and processing, converting complex operational information into intuitive visual reports that supported management decision-making."
         ]
@@ -232,8 +233,8 @@ var resumeData = {
       role: { "zh-Hant": "個人實作專案", en: "Independent Practice Project" },
       status: { "zh-Hant": "持續優化中", en: "Ongoing (continuously optimized)" },
       intro: {
-        "zh-Hant": "雖然我本身是商管背景，但近期在 Claude Code 協作下，從零協助親戚公司建置官方網站，包含網站架構規劃、內容整理、介面調整、功能測試與上線前迭代。過程中持續透過 Prompt Engineering 快速生成 MVP，並反覆進行 debug 與優化，累積 AI 輔助開發的實作經驗。",
-        en: "Although my academic background is in business and management, I recently worked with Claude Code to help build an official website for a relative’s company from scratch. The process included website structure planning, content organization, interface adjustment, testing, and iterative refinement before launch. Through this project, I gained hands-on experience in prompt engineering, rapid MVP generation, debugging, and AI-assisted execution."
+        "zh-Hant": "在 Claude Code 協作下，我近期從零協助親戚公司建置官方網站，包含網站架構規劃、內容整理、介面調整、功能測試與上線前迭代。過程中持續透過 Prompt Engineering 快速生成 MVP，並反覆進行 debug 與優化，累積 AI 輔助開發的實作經驗。",
+        en: "With Claude Code collaboration, I recently helped build an official website for a relative’s company from scratch. The process included website structure planning, content organization, interface adjustment, testing, and iterative refinement before launch. Through this project, I gained hands-on experience in prompt engineering, rapid MVP generation, debugging, and AI-assisted execution."
       },
       responsibilities: {
         "zh-Hant": [
