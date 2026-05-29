@@ -20,7 +20,7 @@ var resumeData = {
         certifications: "證照",
         activities: "活動參與",
         skills: "技能",
-        evidence: "佐證資料",
+        evidence: "作品集",
         contact: "聯絡方式"
       },
       hero: {
@@ -56,7 +56,7 @@ var resumeData = {
         viewSite: "查看網站",
         codeSnapshot: "Code / Logic Snapshot"
       },
-      evidenceTitle: "相關專案成果、活動紀錄與補充資料將持續更新。",
+      evidenceTitle: "以下收錄我近期使用 AI 協作與前端工具完成的網站作品，包含從需求發想到功能測試的實作練習。",
       contactTitle: "聯絡方式",
       download: {
         title: "PDF 下載",
@@ -77,7 +77,7 @@ var resumeData = {
         certifications: "Certifications",
         activities: "Activities",
         skills: "Skills",
-        evidence: "Evidence",
+        evidence: "Portfolio",
         contact: "Contact"
       },
       hero: {
@@ -113,7 +113,7 @@ var resumeData = {
         viewSite: "View Live Site",
         codeSnapshot: "Code / Logic Snapshot"
       },
-      evidenceTitle: "Additional project evidence, activity records, and supporting materials will be updated over time.",
+      evidenceTitle: "Selected website projects I have built or prototyped with AI-assisted workflows and front-end implementation practice.",
       contactTitle: "Contact",
       download: {
         title: "PDF Download",
@@ -392,9 +392,33 @@ var resumeData = {
 
   evidence: [
     {
-      type: { "zh-Hant": "網站實作", en: "Website Practice" },
+      type: { "zh-Hant": "網站作品", en: "Website Project" },
       title: { "zh-Hant": "bakewithmeow 測試版", en: "bakewithmeow test version" },
+      description: {
+        "zh-Hant": "以甜點品牌展示為核心的測試版網站，主要用來呈現品牌風格、商品資訊與使用者瀏覽流程，協助驗證從首頁視覺、內容架構到基本互動體驗的可行性。",
+        en: "A beta website for a dessert brand, designed to present brand style, product information, and the browsing flow while testing the feasibility of the homepage visuals, content structure, and basic interaction experience."
+      },
       link: "https://www.computex.com.my/",
+      visible: true
+    },
+    {
+      type: { "zh-Hant": "網站作品", en: "Website Project" },
+      title: { "zh-Hant": "StartupLens", en: "StartupLens" },
+      description: {
+        "zh-Hant": "這個作品的初衷是協助我集中收集國外新創相關的新聞與產業訊息，讓我能更有效率地追蹤創業趨勢、商業模式與市場動態。",
+        en: "StartupLens was created to help me collect international startup news and industry updates in one place, making it easier to follow entrepreneurship trends, business models, and market movements."
+      },
+      link: "https://startuplens-blue.vercel.app/",
+      visible: true
+    },
+    {
+      type: { "zh-Hant": "網站作品", en: "Website Project" },
+      title: { "zh-Hant": "TOEIC Practice", en: "TOEIC Practice" },
+      description: {
+        "zh-Hant": "這個平台主要是為了建立一個可以持續刷多益題目的練習環境，透過線上題目練習與自我檢測，幫助我更有系統地累積英文考試準備。",
+        en: "This platform was built as a dedicated TOEIC practice environment, supporting online question drills and self-checking so I can prepare for the exam in a more structured and consistent way."
+      },
+      link: "https://toeic-practice-chi.vercel.app/",
       visible: true
     }
   ]
