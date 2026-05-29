@@ -244,6 +244,7 @@
         (item) => `<article class="card">
           <p class="meta">${t("labels.type")}: ${langText(item.type)}</p>
           <h3>${langText(item.title)}</h3>
+          ${item.description ? `<p>${langText(item.description)}</p>` : ""}
           ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.link}</a>` : ""}
         </article>`
       )
